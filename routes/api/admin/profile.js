@@ -6,6 +6,7 @@ const express = require('express');
 //use express router
 const router = express.Router();
 const auth = require('../../../middleware/auth');
+const { check, validationResult } = require('express-validator');
 
 const User = require('../../../models/admin/User');
 const Profile = require('../../../models/admin/Profile');
@@ -36,6 +37,76 @@ router.get('/me', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// @route         POST api/admin/profile
+// @description   Create or update user profile
+// @access        Private
+
+router.post(
+  '/',
+  [auth, [check('status', 'Career status is required').not().isEmpty()]],
+  async (req, res) => {
+    const errors = validationResult(req);
+    //if there is an error
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    //No errors
+
+    const {
+      location,
+      status,
+      bio,
+      youtube,
+      twitter,
+      facebook,
+      linkedin,
+      instagram,
+    } = req.body;
+
+    // Build profile object
+    const profileFields = {};
+    profileFields.user = req.user.id;
+    if (location) profileFields.location = location;
+    if (bio) profileFields.bio = bio;
+    if (status) profileFields.status = status;
+
+    // Build social object
+    profileFields.social = {};
+    if (youtube) profileFields.social.youtube = youtube;
+    if (twitter) profileFields.social.twitter = twitter;
+    if (facebook) profileFields.social.facebook = facebook;
+    if (linkedin) profileFields.social.linkedin = linkedin;
+    if (instagram) profileFields.social.instagram = instagram;
+
+    try {
+      //We're getting req.user.id from token
+      let profile = await Profile.findOne({ user: req.user.id });
+
+      //if profile exists
+      if (profile) {
+        //Update
+        profile = await Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profileFields },
+          { new: true }
+        );
+
+        return res.json(profile);
+      }
+
+      //if profile not exist then CREATE it
+      profile = new Profile(profileFields);
+
+      await profile.save();
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 //export the route
 module.exports = router;
