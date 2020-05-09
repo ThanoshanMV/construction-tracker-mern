@@ -10,6 +10,7 @@ const { check, validationResult } = require('express-validator');
 
 const User = require('../../../models/admin/User');
 const Profile = require('../../../models/admin/Profile');
+const EmployeeProfile = require('../../../models/employee/Profile');
 
 //create route
 
@@ -25,7 +26,7 @@ router.get('/me', auth, async (req, res) => {
     //find profile using id (id taken from token)
     const profile = await Profile.findOne({
       user: req.user.id,
-    }).populate('admin', ['name', 'avatar']);
+    }).populate('user', ['name', 'avatar']);
     // Profile does not exist
     if (!profile) {
       return res.status(400).json({ msg: 'There is no profile for this user' });
@@ -107,6 +108,40 @@ router.post(
     }
   }
 );
+
+// @route         GET api/admin/profile
+// @description   Get all profiles
+// @access        Private
+
+router.get('/', auth, async (req, res) => {
+  try {
+    // check if admin by finding his profile using token
+    const profile = await Profile.findOne({
+      user: req.user.id,
+    }).populate('user', ['isAdmin']);
+
+    // Profile does not exist
+    if (!profile) {
+      return res.status(400).json({ msg: 'No authentication' });
+    }
+    // Profile exists. Now check if he is an admin
+    console.log(profile.user.isAdmin);
+    //Not an admin
+    if (!profile.user.isAdmin) {
+      return res.status(400).json({ msg: 'No authentication' });
+    }
+    //If admin, now he can view all employee profiles
+    const profiles = await EmployeeProfile.find().populate('user', [
+      'name',
+      'avatar',
+      'isAdmin',
+    ]);
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 //export the route
 module.exports = router;
