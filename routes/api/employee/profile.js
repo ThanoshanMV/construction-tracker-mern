@@ -8,7 +8,7 @@ const router = express.Router();
 const auth = require('../../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 
-const User = require('../../../models/admin/User');
+const User = require('../../../models/employee/User');
 const Profile = require('../../../models/employee/Profile');
 
 //create route
@@ -107,6 +107,25 @@ router.post(
     }
   }
 );
+
+// @route         DELETE api/employee/profile
+// @description   Delete profile & user
+// @access        Private
+
+router.delete('/', auth, async (req, res) => {
+  try {
+    // Remove profile
+    await Profile.findOneAndRemove({ user: req.user.id });
+
+    // Remove User
+    await User.findOneAndRemove({ _id: req.user.id });
+
+    res.json({ msg: 'User deleted' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 //export the route
 module.exports = router;
