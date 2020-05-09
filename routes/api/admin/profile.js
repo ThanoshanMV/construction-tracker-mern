@@ -143,5 +143,45 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+// @route         GET api/admin/profile/user/:user_id
+// @description   Get profile by user id
+// @access        Private
+
+router.get('/user/:user_id', auth, async (req, res) => {
+  try {
+    // check if admin by finding his profile using token
+    const profile = await Profile.findOne({
+      user: req.user.id,
+    }).populate('user', ['isAdmin']);
+
+    // Profile does not exist
+    if (!profile) {
+      return res.status(400).json({ msg: 'No authentication' });
+    }
+    // Profile exists. Now check if he is an admin
+    console.log(profile.user.isAdmin);
+    //Not an admin
+    if (!profile.user.isAdmin) {
+      return res.status(400).json({ msg: 'No authentication' });
+    }
+    //If admin, now he can view employee profile by user id
+    const profiles = await EmployeeProfile.findOne({
+      user: req.params.user_id,
+    }).populate('user', ['name', 'avatar', 'isAdmin']);
+
+    // if that particular profile is not found
+    if (!profiles) return res.status(400).json({ msg: 'Profile not found' });
+
+    //if found
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'Profile not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
 //export the route
 module.exports = router;
