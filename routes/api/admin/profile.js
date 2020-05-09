@@ -9,6 +9,7 @@ const auth = require('../../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../../models/admin/User');
+const EmployeeUser = require('../../../models/employee/User');
 const Profile = require('../../../models/admin/Profile');
 const EmployeeProfile = require('../../../models/employee/Profile');
 
@@ -174,6 +175,52 @@ router.get('/user/:user_id', auth, async (req, res) => {
 
     //if found
     res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'Profile not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route         DELETE api/admin/profile/user/:user_id
+// @description   Delete profile & user
+// @access        Private
+
+router.delete('/user/:user_id', auth, async (req, res) => {
+  try {
+    // check if admin by finding his profile using token
+    const profile = await Profile.findOne({
+      user: req.user.id,
+    }).populate('user', ['isAdmin']);
+
+    // Profile does not exist
+    if (!profile) {
+      return res.status(400).json({ msg: 'No authentication' });
+    }
+    // Profile exists. Now check if he is an admin
+    console.log(profile.user.isAdmin);
+    //Not an admin
+    if (!profile.user.isAdmin) {
+      return res.status(400).json({ msg: 'No authentication' });
+    }
+    //If admin, now he can delete employee
+    const profiles = await EmployeeProfile.findOne({
+      user: req.params.user_id,
+    });
+
+    // if that particular profile is not found
+    if (!profiles) return res.status(400).json({ msg: 'Profile not found' });
+
+    //if found
+    // Remove profile
+    await EmployeeProfile.findOneAndRemove({ user: req.params.user_id });
+
+    // Remove User
+    await EmployeeUser.findOneAndRemove({ _id: req.params.user_id });
+
+    res.json({ msg: 'User deleted' });
   } catch (err) {
     console.error(err.message);
     if (err.kind == 'ObjectId') {
