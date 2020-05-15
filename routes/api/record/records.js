@@ -130,5 +130,58 @@ router.post(
   }
 );
 
+// @route         GET api/records/:id
+// @description   Get record by reference number
+// @access        Private
+
+router.get('/:id', auth, async (req, res) => {
+  try {
+    // find the record by its reference number
+    const record = await Record.findOne({
+      referenceNumber: req.params.id,
+    });
+
+    // if that particular record is not found
+    if (!record) return res.status(400).json({ msg: 'Record not found' });
+
+    //if found
+    res.json(record);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'Record not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route         DELETE api/records/:id
+// @description   Delete a record
+// @access        Private
+
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    // find the recordby its reference number
+    const record = await Record.findOne({
+      referenceNumber: req.params.id,
+    });
+
+    // if that particular record is not found
+    if (!record) return res.status(400).json({ msg: 'Record not found' });
+
+    //if found
+    // Remove record
+    await Record.findOneAndRemove({ referenceNumber: req.params.id });
+
+    res.json({ msg: 'Record deleted' });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'Record not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
 //export the route
 module.exports = router;
