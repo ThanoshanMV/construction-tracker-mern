@@ -11,18 +11,19 @@
  */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
     <nav className='navbar bg-dark'>
       <h1>
-        <a href='index.html'>
+        <Link to='/'>
           <i className='fas fa-building'></i> Construction Tracker
-        </a>
+        </Link>
       </h1>
       <ul>
         <li>
-          <a href='login.html'> Admin Login</a>
+          <Link to='/login'> Admin Login</Link>
         </li>
         <li>
           |<a href='login-user.html'> User Login</a>
