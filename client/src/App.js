@@ -5,6 +5,10 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import AdminLogin from './components/auth/AdminLogin';
 import UserLogin from './components/auth/UserLogin';
+//Redux
+import { Provider } from 'react-redux';
+import store from './store';
+
 import './App.css';
 
 /**
@@ -28,21 +32,23 @@ import './App.css';
  */
 
 const App = () => (
-  <Router>
-    <Fragment>
-      <Navbar />
-      <Route exact path='/' component={Landing} />
-      <section className='container'>
-        {/* A <Switch> looks through its children <Route>s and
+  <Provider store={store}>
+    <Router>
+      <Fragment>
+        <Navbar />
+        <Route exact path='/' component={Landing} />
+        <section className='container'>
+          {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-        <Switch>
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/admin-login' component={AdminLogin} />
-          <Route exact path='/user-login' component={UserLogin} />
-        </Switch>
-      </section>
-    </Fragment>
-  </Router>
+          <Switch>
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/admin-login' component={AdminLogin} />
+            <Route exact path='/user-login' component={UserLogin} />
+          </Switch>
+        </section>
+      </Fragment>
+    </Router>
+  </Provider>
 );
 
 export default App;
