@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
-import Login from './components/auth/Login';
+import AdminLogin from './components/auth/AdminLogin';
+import UserLogin from './components/auth/UserLogin';
 import './App.css';
 
 /**
@@ -36,7 +37,8 @@ const App = () => (
             renders the first one that matches the current URL. */}
         <Switch>
           <Route exact path='/register' component={Register} />
-          <Route exact path='/login' component={Login} />
+          <Route exact path='/admin-login' component={AdminLogin} />
+          <Route exact path='/user-login' component={UserLogin} />
         </Switch>
       </section>
     </Fragment>

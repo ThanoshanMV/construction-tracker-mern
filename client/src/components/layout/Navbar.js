@@ -23,10 +23,10 @@ const Navbar = () => {
       </h1>
       <ul>
         <li>
-          <Link to='/login'> Admin Login</Link>
+          <Link to='/admin-login'> Admin Login</Link>
         </li>
         <li>
-          |<a href='login-user.html'> User Login</a>
+          |<Link to='/user-login'> User Login</Link>
         </li>
       </ul>
     </nav>

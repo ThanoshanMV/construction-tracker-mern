@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 /**
  * Since it's a form we need to have component state
@@ -26,12 +27,37 @@ const Register = () => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
       console.log('Passwords do not match');
     } else {
-      console.log(formData);
+      console.log('SUCCESS');
+
+      /**
+       * Example code of connecting to Mongo
+       */
+      /*const newUser = {
+        name,
+        email,
+        password,
+      };
+
+      try {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+
+        const body = JSON.stringify(newUser);
+
+        const res = await axios.post('api/employee/users', body, config);
+        //res.data should be token
+        console.log(res.data);
+      } catch (err) {
+        console.error(err.response.data);
+      }*/
     }
   };
 
@@ -95,9 +121,9 @@ const Register = () => {
           />
         </div>
         <input type='submit' className='btn btn-primary' value='Register' />
-        <a className='btn btn-light my-1' href='dashboard.html'>
+        <Link className='btn btn-light my-1' to='/'>
           Go Back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );
