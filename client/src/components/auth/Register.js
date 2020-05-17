@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
 /**
@@ -12,7 +13,7 @@ import PropTypes from 'prop-types';
  *
  */
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
   /**
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
@@ -35,32 +36,7 @@ const Register = ({ setAlert }) => {
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      console.log('SUCCESS');
-
-      /**
-       * Example code of connecting to Mongo
-       */
-      /*const newUser = {
-        name,
-        email,
-        password,
-      };
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
-
-        const body = JSON.stringify(newUser);
-
-        const res = await axios.post('api/employee/users', body, config);
-        //res.data should be token
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      }*/
+      register({ name, email, password });
     }
   };
 
@@ -81,7 +57,6 @@ const Register = ({ setAlert }) => {
             name='name'
             value={name}
             onChange={(e) => onChange(e)}
-            required
           />
         </div>
         <div className='form-group'>
@@ -92,7 +67,6 @@ const Register = ({ setAlert }) => {
             type='email'
             placeholder='Email Address'
             name='email'
-            required
             value={email}
             onChange={(e) => onChange(e)}
           />
@@ -134,6 +108,7 @@ const Register = ({ setAlert }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
 };
 
 /**
@@ -142,4 +117,4 @@ Register.propTypes = {
  * 1 : state that you want to map
  * 2 : an object with actions that you want to use.
  */
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
