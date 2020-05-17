@@ -5,6 +5,7 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import AdminLogin from './components/auth/AdminLogin';
 import UserLogin from './components/auth/UserLogin';
+import Alert from './components/layout/Alert';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -40,6 +41,7 @@ const App = () => (
         <section className='container'>
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
+          <Alert />
           <Switch>
             <Route exact path='/register' component={Register} />
             <Route exact path='/admin-login' component={AdminLogin} />

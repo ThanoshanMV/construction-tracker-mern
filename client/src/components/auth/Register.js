@@ -1,5 +1,8 @@
 import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setAlert } from '../../actions/alert';
+import PropTypes from 'prop-types';
 
 /**
  * Since it's a form we need to have component state
@@ -9,7 +12,7 @@ import { Link } from 'react-router-dom';
  *
  */
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   /**
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
@@ -30,7 +33,7 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('Passwords do not match');
+      setAlert('Passwords do not match', 'danger');
     } else {
       console.log('SUCCESS');
 
@@ -129,4 +132,14 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
+
+/**
+ * whenever we use connect, we have to export it.
+ * connect takes 2 parameters:
+ * 1 : state that you want to map
+ * 2 : an object with actions that you want to use.
+ */
+export default connect(null, { setAlert })(Register);
