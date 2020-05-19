@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
@@ -9,6 +9,8 @@ import Alert from './components/layout/Alert';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
+import { loadUser } from './actions/auth';
+import setAuthToken from './utils/setAuthToken';
 
 import './App.css';
 
@@ -27,30 +29,41 @@ import './App.css';
  * React Router Documentation: https://reacttraining.com/react-router/web/guides/quick-start
  */
 
+// Check localStorage for token
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
 /**
  * We have to push section element in the middle thus
  * we put it except for the landing page
  */
 
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <Fragment>
-        <Navbar />
-        <Route exact path='/' component={Landing} />
-        <section className='container'>
-          {/* A <Switch> looks through its children <Route>s and
+const App = () => {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
+  return (
+    <Provider store={store}>
+      <Router>
+        <Fragment>
+          <Navbar />
+          <Route exact path='/' component={Landing} />
+          <section className='container'>
+            {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-          <Alert />
-          <Switch>
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/admin-login' component={AdminLogin} />
-            <Route exact path='/user-login' component={UserLogin} />
-          </Switch>
-        </section>
-      </Fragment>
-    </Router>
-  </Provider>
-);
+            <Alert />
+            <Switch>
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/admin-login' component={AdminLogin} />
+              <Route exact path='/user-login' component={UserLogin} />
+            </Switch>
+          </section>
+        </Fragment>
+      </Router>
+    </Provider>
+  );
+};
 
 export default App;
