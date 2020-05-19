@@ -1,5 +1,8 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../../actions/auth';
 
 /**
  * Since it's a form we need to have component state
@@ -9,7 +12,7 @@ import { Link } from 'react-router-dom';
  *
  */
 
-const UserLogin = () => {
+const UserLogin = ({ login, isAuthenticated }) => {
   /**
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
@@ -27,8 +30,13 @@ const UserLogin = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log('SUCCESS');
+    login(email, password);
   };
+
+  // Redirect if logged in
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
 
   return (
     <Fragment>
@@ -72,4 +80,13 @@ const UserLogin = () => {
   );
 };
 
-export default UserLogin;
+UserLogin.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(UserLogin);
