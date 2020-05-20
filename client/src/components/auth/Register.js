@@ -42,7 +42,7 @@ const Register = ({ setAlert, register, isAuthenticated, isRegistered }) => {
 
   // Redirect if successfully registered user
   if (isRegistered) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to='/admin-dashboard' />;
   }
 
   return (

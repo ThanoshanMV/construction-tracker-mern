@@ -6,6 +6,10 @@ import Register from './components/auth/Register';
 import AdminLogin from './components/auth/AdminLogin';
 import UserLogin from './components/auth/UserLogin';
 import Alert from './components/layout/Alert';
+import AdminDashboard from './components/dashboard/AdminDashboard';
+import UserDashboard from './components/dashboard/UserDashboard';
+import AdminPrivateRoute from './components/routing/AdminPrivateRoute';
+import UserPrivateRoute from './components/routing/UserPrivateRoute';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -69,6 +73,16 @@ const App = () => {
               <Route exact path='/register' component={Register} />
               <Route exact path='/admin-login' component={AdminLogin} />
               <Route exact path='/user-login' component={UserLogin} />
+              <AdminPrivateRoute
+                exact
+                path='/admin-dashboard'
+                component={AdminDashboard}
+              />
+              <UserPrivateRoute
+                exact
+                path='/user-dashboard'
+                component={UserDashboard}
+              />
             </Switch>
           </section>
         </Fragment>

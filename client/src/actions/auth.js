@@ -4,6 +4,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
+  ADMIN_LOADED,
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
@@ -11,7 +12,7 @@ import {
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
-// Load Member
+// Load Member (Admin Or User(Employee))
 export const load = () => async (dispatch) => {
   // Check localStorage for token
   if (localStorage.token) {
@@ -46,7 +47,7 @@ export const load = () => async (dispatch) => {
           if (responseToAdminRoute.data) {
             console.log('Admin details has been loaded');
             dispatch({
-              type: USER_LOADED,
+              type: ADMIN_LOADED,
               payload: responseToAdminRoute.data,
             });
           }
@@ -95,7 +96,7 @@ export const loadAdmin = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/admin/auth');
     dispatch({
-      type: USER_LOADED,
+      type: ADMIN_LOADED,
       payload: res.data,
     });
   } catch (err) {

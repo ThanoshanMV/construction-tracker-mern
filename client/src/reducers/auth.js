@@ -2,6 +2,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
+  ADMIN_LOADED,
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
@@ -14,6 +15,7 @@ import {
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
+  isAdmin: null,
   isRegistered: false,
   loading: true,
   user: null,
@@ -32,6 +34,15 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
+        isAdmin: false,
+        loading: false,
+        user: payload,
+      };
+    case ADMIN_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isAdmin: true,
         loading: false,
         user: payload,
       };
@@ -50,6 +61,7 @@ export default function (state = initialState, action) {
         ...state,
         ...payload,
         isAuthenticated: true,
+        isAdmin: true,
         isRegistered: true,
         loading: false,
       };
@@ -59,6 +71,7 @@ export default function (state = initialState, action) {
         ...state,
         ...payload,
         isAuthenticated: true,
+        isAdmin: true,
         isRegistered: false,
         loading: false,
       };
@@ -70,7 +83,9 @@ export default function (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
+        isAdmin: false,
         loading: false,
+        admin: false,
       };
 
     default:
