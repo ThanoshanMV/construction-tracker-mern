@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
  *
  */
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ setAlert, register, isAuthenticated, isRegistered }) => {
   /**
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
@@ -41,7 +41,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   };
 
   // Redirect if successfully registered user
-  if (isAuthenticated) {
+  if (isRegistered) {
     return <Redirect to='/dashboard' />;
   }
 
@@ -115,10 +115,12 @@ Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  isRegistered: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  isRegistered: state.auth.isRegistered,
 });
 
 /**

@@ -11,18 +11,22 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
+const auth = require('../../../middleware/auth');
+
 //Bring down the User model
 const User = require('../../../models/employee/User');
+//Admin model
+const Admin = require('../../../models/admin/User');
 
 //create route
 
 // @route         POST api/employee/users
 // @description   Register user
-// @access        Public
+// @access        Private (ONLY Admin can add users)
 
-//if the access in public you dont need jsonwebtokens (dont require authorizations)
 router.post(
   '/',
+  auth,
   [
     //Using express-validator to validate inputs
     check('name', 'Name is required').not().isEmpty(),
@@ -50,6 +54,22 @@ router.post(
      */
 
     try {
+      // check if admin by finding his id using token
+      const adminUser = await Admin.findOne({
+        _id: req.user.id,
+      });
+
+      // Profile does not exist
+      if (!adminUser) {
+        return res.status(400).json({ msg: 'No authentication !!' });
+      }
+      // Profile exists. Now check if he is an admin
+      console.log(adminUser.isAdmin);
+      //Not an admin
+      if (!adminUser.isAdmin) {
+        return res.status(400).json({ msg: 'No authentication' });
+      }
+      //If admin, now he can register employees
       //See if user exists
       let user = await User.findOne({ email });
 
