@@ -9,7 +9,9 @@ import Alert from './components/layout/Alert';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
-import { loadUser } from './actions/auth';
+// import { loadUser } from './actions/auth';
+// import { loadAdmin } from './actions/auth';
+import { load } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
 import './App.css';
@@ -40,9 +42,18 @@ if (localStorage.token) {
  */
 
 const App = () => {
+  /**
+   * For reference Effect hook: https://reactjs.org/docs/hooks-effect.html
+   */
   useEffect(() => {
-    store.dispatch(loadUser());
+    // store.dispatch(loadUser());
+    // store.dispatch(loadAdmin());
+    store.dispatch(load());
   }, []);
+  // passing empty array ( [] ) as a second param. to run this effect and cleanup only once (on mount and unmount).
+  /**
+   * For reference on 2nd param.: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+   */
 
   return (
     <Provider store={store}>
