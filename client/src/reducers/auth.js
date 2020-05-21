@@ -85,7 +85,7 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         isAdmin: false,
         loading: false,
-        admin: false,
+        user: null,
       };
 
     default:

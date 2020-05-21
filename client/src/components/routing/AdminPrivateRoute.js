@@ -10,17 +10,27 @@ const AdminPrivateRoute = ({
 }) => (
   <Route
     {...rest}
-    render={(props) =>
-      /**
-       * Checking if user not authenticated and not loaded and if that's true we'll redirect him to '/admin-login' and if not we'll redirect him to Component.
-       */
+    render={(props) => {
+      // NOTE: !loading will always return true when loading has finished.
+      // Not Authenticated when loading has finished
+      if (!isAuthenticated && !loading) {
+        return <Redirect to='/' />;
+      }
+      // Authenticated when loading but not an Admin
+      else if (isAuthenticated && !loading && !isAdmin) {
+        return <Redirect to='/' />;
+      }
+      // Authenticated when loading and he's an Admin
+      else {
+        return <Component {...props} />;
+      }
+    }}
 
-      !isAuthenticated && !loading ? (
-        <Redirect to='/admin-login' />
-      ) : (
-        <Component {...props} />
-      )
-    }
+    /**
+     * Default way of providing authenticatin when you have one role user only :
+     * !isAuthenticated && !loading ?
+     * ( <Redirect to='/' /> ) : ( <Component {...props} /> )
+     */
   />
 );
 
