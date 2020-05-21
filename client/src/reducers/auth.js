@@ -5,7 +5,8 @@ import {
   ADMIN_LOADED,
   AUTH_ERROR,
   LOGIN_FAIL,
-  LOGIN_SUCCESS,
+  ADMIN_LOGIN_SUCCESS,
+  USER_LOGIN_SUCCESS,
   LOGOUT,
 } from '../actions/types';
 
@@ -47,12 +48,22 @@ export default function (state = initialState, action) {
         user: payload,
       };
     //case REGISTER_SUCCESS:
-    case LOGIN_SUCCESS:
+    case USER_LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token);
       return {
         ...state,
         ...payload,
         isAuthenticated: true,
+        isAdmin: false,
+        loading: false,
+      };
+    case ADMIN_LOGIN_SUCCESS:
+      localStorage.setItem('token', payload.token);
+      return {
+        ...state,
+        ...payload,
+        isAuthenticated: true,
+        isAdmin: true,
         loading: false,
       };
     case REGISTER_SUCCESS:
@@ -83,7 +94,7 @@ export default function (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
-        isAdmin: false,
+        isAdmin: null,
         loading: false,
         user: null,
       };

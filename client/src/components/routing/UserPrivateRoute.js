@@ -11,17 +11,11 @@ const UserPrivateRoute = ({
     {...rest}
     render={(props) => {
       // NOTE: !loading will always return true when loading has finished.
-      // Not Authenticated when loading has finished
-      if (!isAuthenticated && !loading) {
-        return <Redirect to='/' />;
-      }
-      // Authenticated when loading but not User (Admin)
-      else if (isAuthenticated && !loading && isAdmin) {
-        return <Redirect to='/' />;
-      }
-      // Authenticated when loading and he's a User
-      else {
+      // Authenticated and not an andmin (should be user) when loading has finished.
+      if (isAuthenticated && !isAdmin && !loading) {
         return <Component {...props} />;
+      } else {
+        return <Redirect to='/' />;
       }
     }}
 

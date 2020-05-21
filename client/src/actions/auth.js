@@ -7,7 +7,8 @@ import {
   ADMIN_LOADED,
   AUTH_ERROR,
   LOGIN_FAIL,
-  LOGIN_SUCCESS,
+  ADMIN_LOGIN_SUCCESS,
+  USER_LOGIN_SUCCESS,
   LOGOUT,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
@@ -155,7 +156,7 @@ export const login = (email, password) => async (dispatch) => {
     const res = await axios.post('api/employee/auth', body, config);
 
     dispatch({
-      type: LOGIN_SUCCESS,
+      type: USER_LOGIN_SUCCESS,
       payload: res.data,
     });
 
@@ -188,7 +189,7 @@ export const loginAdmin = (email, password) => async (dispatch) => {
     const res = await axios.post('api/admin/auth', body, config);
 
     dispatch({
-      type: LOGIN_SUCCESS,
+      type: ADMIN_LOGIN_SUCCESS,
       payload: res.data,
     });
 
