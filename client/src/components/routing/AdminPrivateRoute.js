@@ -12,11 +12,11 @@ const AdminPrivateRoute = ({
     {...rest}
     render={(props) => {
       // NOTE: !loading will always return true when loading has finished.
-      // Authenticated and an Admin when loading has finished.
-      if (isAuthenticated && isAdmin && !loading) {
-        return <Component {...props} />;
-      } else {
+      // Not an Admin when loading has finished.
+      if (!isAdmin && !loading) {
         return <Redirect to='/' />;
+      } else {
+        return <Component {...props} />;
       }
     }}
 

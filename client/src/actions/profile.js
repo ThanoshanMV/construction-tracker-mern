@@ -20,7 +20,7 @@ export const getCurrentAdminProfile = () => async (dispatch) => {
   }
 };
 
-// Get current admin profile
+// Get current employee profile
 export const getCurrentEmployeeProfile = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/employee/profile/me');

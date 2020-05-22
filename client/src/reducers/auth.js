@@ -17,6 +17,7 @@ const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
   isAdmin: null,
+  isUser: null,
   isRegistered: false,
   loading: true,
   user: null,
@@ -35,7 +36,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
-        isAdmin: false,
+        isUser: true,
         loading: false,
         user: payload,
       };
@@ -54,7 +55,7 @@ export default function (state = initialState, action) {
         ...state,
         ...payload,
         isAuthenticated: true,
-        isAdmin: false,
+        isUser: true,
         loading: false,
       };
     case ADMIN_LOGIN_SUCCESS:
@@ -94,7 +95,8 @@ export default function (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
-        isAdmin: null,
+        isAdmin: false,
+        isUser: false,
         loading: false,
         user: null,
       };

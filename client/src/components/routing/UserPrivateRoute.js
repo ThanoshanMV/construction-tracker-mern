@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 const UserPrivateRoute = ({
   component: Component,
-  auth: { isAuthenticated, loading, isAdmin },
+  auth: { isAuthenticated, loading, isUser },
   ...rest
 }) => (
   <Route
     {...rest}
     render={(props) => {
       // NOTE: !loading will always return true when loading has finished.
-      // Authenticated and not an andmin (should be user) when loading has finished.
-      if (isAuthenticated && !isAdmin && !loading) {
-        return <Component {...props} />;
-      } else {
+      // Not a user when loading has finished.
+      if (!isUser && !loading) {
         return <Redirect to='/' />;
+      } else {
+        return <Component {...props} />;
       }
     }}
 
