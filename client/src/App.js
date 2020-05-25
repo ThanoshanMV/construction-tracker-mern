@@ -8,6 +8,8 @@ import UserLogin from './components/auth/UserLogin';
 import Alert from './components/layout/Alert';
 import AdminDashboard from './components/dashboard/AdminDashboard';
 import UserDashboard from './components/dashboard/UserDashboard';
+import AdminCreateProfile from './components/profile-form/AdminCreateProfile';
+import UserCreateProfile from './components/profile-form/UserCreateProfile';
 import AdminPrivateRoute from './components/routing/AdminPrivateRoute';
 import UserPrivateRoute from './components/routing/UserPrivateRoute';
 //Redux
@@ -78,10 +80,20 @@ const App = () => {
                 path='/admin-dashboard'
                 component={AdminDashboard}
               />
+              <AdminPrivateRoute
+                exact
+                path='/admin-create-profile'
+                component={AdminCreateProfile}
+              />
               <UserPrivateRoute
                 exact
                 path='/user-dashboard'
                 component={UserDashboard}
+              />
+              <UserPrivateRoute
+                exact
+                path='/user-create-profile'
+                component={UserCreateProfile}
               />
             </Switch>
           </section>
