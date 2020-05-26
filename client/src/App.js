@@ -10,6 +10,8 @@ import AdminDashboard from './components/dashboard/AdminDashboard';
 import UserDashboard from './components/dashboard/UserDashboard';
 import AdminCreateProfile from './components/profile-form/AdminCreateProfile';
 import UserCreateProfile from './components/profile-form/UserCreateProfile';
+import AdminEditProfile from './components/profile-form/AdminEditProfile';
+import UserEditProfile from './components/profile-form/UserEditProfile';
 import AdminPrivateRoute from './components/routing/AdminPrivateRoute';
 import UserPrivateRoute from './components/routing/UserPrivateRoute';
 //Redux
@@ -85,6 +87,11 @@ const App = () => {
                 path='/admin-create-profile'
                 component={AdminCreateProfile}
               />
+              <AdminPrivateRoute
+                exact
+                path='/admin-edit-profile'
+                component={AdminEditProfile}
+              />
               <UserPrivateRoute
                 exact
                 path='/user-dashboard'
@@ -94,6 +101,11 @@ const App = () => {
                 exact
                 path='/user-create-profile'
                 component={UserCreateProfile}
+              />
+              <UserPrivateRoute
+                exact
+                path='/user-edit-profile'
+                component={UserEditProfile}
               />
             </Switch>
           </section>

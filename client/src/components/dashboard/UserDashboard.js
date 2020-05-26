@@ -3,16 +3,17 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import { getCurrentEmployeeProfile } from '../../actions/profile';
+import UserDashboardActions from './UserDashboardActions';
+import { getCurrentUserProfile } from '../../actions/profile';
 
 const UserDashboard = ({
-  getCurrentEmployeeProfile,
+  getCurrentUserProfile,
   auth: { user },
   profile: { profile, loading },
 }) => {
-  // Run getCurrentAdminProfile() only once
+  // Run getCurrentUserProfile() only once
   useEffect(() => {
-    getCurrentEmployeeProfile();
+    getCurrentUserProfile();
   }, []);
 
   return loading && profile === null ? (
@@ -24,7 +25,9 @@ const UserDashboard = ({
         <i className='fas fa-user'></i> Welcome {user && user.name}
       </p>
       {profile !== null ? (
-        <Fragment>has</Fragment>
+        <Fragment>
+          <UserDashboardActions />
+        </Fragment>
       ) : (
         <Fragment>
           <p>You have not yet setup a profile, please add some info</p>
@@ -38,7 +41,7 @@ const UserDashboard = ({
 };
 
 UserDashboard.propTypes = {
-  getCurrentEmployeeProfile: PropTypes.func.isRequired,
+  getCurrentUserProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 };
@@ -48,6 +51,6 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { getCurrentEmployeeProfile })(
+export default connect(mapStateToProps, { getCurrentUserProfile })(
   UserDashboard
 );

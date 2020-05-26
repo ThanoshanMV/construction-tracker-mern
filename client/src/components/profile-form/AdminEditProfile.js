@@ -1,11 +1,18 @@
-import React, { Fragment, useState } from 'react';
-// to use history object, we use withRouter
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createAdminProfile } from '../../actions/profile';
+import {
+  createAdminProfile,
+  getCurrentAdminProfile,
+} from '../../actions/profile';
 
-const AdminCreateProfile = ({ createAdminProfile, history }) => {
+const AdminEditProfile = ({
+  profile: { profile, loading },
+  createAdminProfile,
+  getCurrentAdminProfile,
+  history,
+}) => {
   const [formData, setFormData] = useState({
     status: '',
     location: '',
@@ -18,6 +25,23 @@ const AdminCreateProfile = ({ createAdminProfile, history }) => {
   // Add Socil Network Links Button state implementations
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
+  // we'll use useEffect to get current profile and fetch them
+  useEffect(() => {
+    getCurrentAdminProfile();
+
+    // we are checking and fetching the data inside the form
+    setFormData({
+      status: loading || !profile.status ? '' : profile.status,
+      location: loading || !profile.location ? '' : profile.location,
+      bio: loading || !profile.bio ? '' : profile.bio,
+      twitter: loading || !profile.social ? '' : profile.social.twitter,
+      facebook: loading || !profile.social ? '' : profile.social.facebook,
+      instagram: loading || !profile.social ? '' : profile.social.instagram,
+    });
+  }, [loading]);
+
+  // [loading] means when loading true, we'll run useEffect
+
   const { status, location, bio, twitter, facebook, instagram } = formData;
 
   const onChange = (e) =>
@@ -26,7 +50,8 @@ const AdminCreateProfile = ({ createAdminProfile, history }) => {
   // Creating onSubmit
   const onSubmit = (e) => {
     e.preventDefault();
-    createAdminProfile(formData, history);
+    // adding true as this is an edit form
+    createAdminProfile(formData, history, true);
   };
   return (
     <Fragment>
@@ -127,11 +152,17 @@ const AdminCreateProfile = ({ createAdminProfile, history }) => {
   );
 };
 
-AdminCreateProfile.propTypes = {
-  // Our action createAdminProfile is a function
+AdminEditProfile.propTypes = {
   createAdminProfile: PropTypes.func.isRequired,
+  getCurrentAdminProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createAdminProfile })(
-  withRouter(AdminCreateProfile)
-);
+const mapStateToProps = (state) => ({
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps, {
+  createAdminProfile,
+  getCurrentAdminProfile,
+})(withRouter(AdminEditProfile));
