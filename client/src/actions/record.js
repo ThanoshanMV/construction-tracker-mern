@@ -78,3 +78,22 @@ export const createUserRecord = (formData, history, edit = false) => async (
     });
   }
 };
+
+// Get current record
+export const getCurrentRecord = (id, history) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/records/${id}`);
+
+    dispatch({
+      type: GET_RECORD,
+      payload: res.data,
+    });
+    history.push('/admin-edit-record');
+  } catch (err) {
+    dispatch({
+      type: RECORD_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    dispatch(setAlert('Record Not Found!', 'danger'));
+  }
+};

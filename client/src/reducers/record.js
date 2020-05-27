@@ -20,6 +20,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         error: payload,
+        record: null,
         loading: false,
       };
     case CLEAR_RECORD:

@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import AdminDashboardActions from './AdminDashboardActions';
+import Record from './Record';
 import { getCurrentAdminProfile } from '../../actions/profile';
+import SearchBar from './SearchBar';
 
 const AdminDashboard = ({
   getCurrentAdminProfile,
   auth: { user },
   profile: { profile, loading },
+  record,
 }) => {
   // Run getCurrentAdminProfile() only once
   useEffect(() => {
@@ -27,6 +30,7 @@ const AdminDashboard = ({
       {profile !== null ? (
         <Fragment>
           <AdminDashboardActions />
+          <SearchBar />
         </Fragment>
       ) : (
         <Fragment>
@@ -44,11 +48,13 @@ AdminDashboard.propTypes = {
   getCurrentAdminProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  record: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
   profile: state.profile,
+  record: state.record,
 });
 
 export default connect(mapStateToProps, { getCurrentAdminProfile })(
