@@ -74,7 +74,6 @@ const App = () => {
             renders the first one that matches the current URL. */}
             <Alert />
             <Switch>
-              <Route exact path='/register' component={Register} />
               <Route exact path='/admin-login' component={AdminLogin} />
               <Route exact path='/user-login' component={UserLogin} />
               <AdminPrivateRoute
@@ -92,6 +91,7 @@ const App = () => {
                 path='/admin-edit-profile'
                 component={AdminEditProfile}
               />
+              <AdminPrivateRoute exact path='/register' component={Register} />
               <UserPrivateRoute
                 exact
                 path='/user-dashboard'

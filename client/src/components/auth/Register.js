@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import Spinner from '../layout/Spinner';
 
 /**
  * Since it's a form we need to have component state
@@ -13,7 +14,7 @@ import PropTypes from 'prop-types';
  *
  */
 
-const Register = ({ setAlert, register, isAuthenticated, isRegistered }) => {
+const Register = ({ setAlert, register, isRegistered, isAdmin, loading }) => {
   /**
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
@@ -45,7 +46,16 @@ const Register = ({ setAlert, register, isAuthenticated, isRegistered }) => {
     return <Redirect to='/admin-dashboard' />;
   }
 
-  return (
+  /**
+   * As Admin only can register Users, we've made register route private to Admin.
+   * Until it validates user's details that whether he's admin or user we must use spinner gif to display there instead of showing register content even for small amount of seconds!! (Just like we've implemented in dashboards)
+   */
+
+  // Remember each time page loads either ADMIN_LOADED or USER_LOADED reducer is called (for more info see App.js useEffect)
+
+  return loading && isAdmin === null ? (
+    <Spinner />
+  ) : (
     <Fragment>
       <h1 className='large text-primary'>Register User</h1>
       <p className='lead'>
@@ -114,13 +124,15 @@ const Register = ({ setAlert, register, isAuthenticated, isRegistered }) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
   isRegistered: PropTypes.bool,
+  isAdmin: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
   isRegistered: state.auth.isRegistered,
+  isAdmin: state.auth.isAdmin,
+  loading: state.auth.loading,
 });
 
 /**

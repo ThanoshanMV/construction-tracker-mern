@@ -127,6 +127,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
       // res includes token too! (token that's created when registering employee)
       payload: res.data,
     });
+    dispatch(setAlert('User Successfully Created', 'success'));
     // we don't have to load employee details when admin registers..(loadUser())
     dispatch(loadAdmin());
   } catch (err) {
