@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import UserDashboardActions from './UserDashboardActions';
+import UserSearchBar from './UserSearchBar';
 import { getCurrentUserProfile } from '../../actions/profile';
 
 const UserDashboard = ({
@@ -27,6 +28,7 @@ const UserDashboard = ({
       {profile !== null ? (
         <Fragment>
           <UserDashboardActions />
+          <UserSearchBar />
         </Fragment>
       ) : (
         <Fragment>

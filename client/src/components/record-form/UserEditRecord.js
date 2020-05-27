@@ -1,13 +1,16 @@
-import React, { Fragment, useState } from 'react';
-// to use history object, we use withRouter
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createUserRecord } from '../../actions/record';
+import { createUserRecord, getCurrentRecordUser } from '../../actions/record';
 
-const UserCreateRecord = ({ createUserRecord, history }) => {
+const UserEditRecord = ({
+  record: { record, loading },
+  createUserRecord,
+  getCurrentRecordUser,
+  history,
+}) => {
   const [formData, setFormData] = useState({
-    status: '',
     referenceNumber: '',
     dateOfApplicationRequested: '',
     purpose: '',
@@ -34,6 +37,86 @@ const UserCreateRecord = ({ createUserRecord, history }) => {
     dateOfDecisionGivenToApplicant: '',
     stage7Comments: '',
   });
+
+  // we'll use useEffect to get current profile and fetch them
+  useEffect(() => {
+    getCurrentRecordUser(record.referenceNumber, history);
+
+    // we are checking and fetching the data inside the form
+    setFormData({
+      referenceNumber:
+        loading || !record.referenceNumber ? '' : record.referenceNumber,
+      dateOfApplicationRequested:
+        loading || !record.dateOfApplicationRequested
+          ? ''
+          : record.dateOfApplicationRequested,
+      purpose: loading || !record.purpose ? '' : record.purpose,
+      stage1Comments:
+        loading || !record.stage1Comments ? '' : record.stage1Comments,
+      applicantAddress:
+        loading || !record.applicantAddress ? '' : record.applicantAddress,
+      constructionAddress:
+        loading || !record.constructionAddress
+          ? ''
+          : record.constructionAddress,
+      contactNo: loading || !record.contactNo ? '' : record.contactNo,
+      payment: loading || !record.payment ? '' : record.payment,
+      dateOfApplicationSubmitted:
+        loading || !record.dateOfApplicationSubmitted
+          ? ''
+          : record.dateOfApplicationSubmitted,
+      relatedDocumentsSubmitted:
+        loading || !record.relatedDocumentsSubmitted
+          ? ''
+          : record.relatedDocumentsSubmitted,
+      nbroRecommentationReport:
+        loading || !record.nbroRecommentationReport
+          ? ''
+          : record.nbroRecommentationReport,
+      stage2Comments:
+        loading || !record.stage2Comments ? '' : record.stage2Comments,
+      technicalRecommendation:
+        loading || !record.technicalRecommendation
+          ? ''
+          : record.technicalRecommendation,
+      stage3Comments:
+        loading || !record.stage3Comments ? '' : record.stage3Comments,
+      phiRecommendation:
+        loading || !record.phiRecommendation ? '' : record.phiRecommendation,
+      stage4Comments:
+        loading || !record.stage4Comments ? '' : record.stage4Comments,
+      rdaRecommendation:
+        loading || !record.rdaRecommendation ? '' : record.rdaRecommendation,
+      stage5Comments:
+        loading || !record.stage5Comments ? '' : record.stage5Comments,
+      dateOfApplicationForwardedToPlanningCommittee:
+        loading || !record.dateOfApplicationForwardedToPlanningCommittee
+          ? ''
+          : record.dateOfApplicationForwardedToPlanningCommittee,
+      planningCommitteeDecision:
+        loading || !record.planningCommitteeDecision
+          ? ''
+          : record.planningCommitteeDecision,
+      stage6Comments:
+        loading || !record.stage6Comments ? '' : record.stage6Comments,
+      dateOfPlanningCommitteeDecision:
+        loading || !record.dateOfPlanningCommitteeDecision
+          ? ''
+          : record.dateOfPlanningCommitteeDecision,
+      statusOfTheApplication:
+        loading || !record.statusOfTheApplication
+          ? ''
+          : record.statusOfTheApplication,
+      dateOfDecisionGivenToApplicant:
+        loading || !record.dateOfDecisionGivenToApplicant
+          ? ''
+          : record.dateOfDecisionGivenToApplicant,
+      stage7Comments:
+        loading || !record.stage7Comments ? '' : record.stage7Comments,
+    });
+  }, [loading]);
+
+  // [loading] means when loading true, we'll run useEffect
 
   const {
     referenceNumber,
@@ -69,7 +152,8 @@ const UserCreateRecord = ({ createUserRecord, history }) => {
   // Creating onSubmit
   const onSubmit = (e) => {
     e.preventDefault();
-    createUserRecord(formData, history);
+    // adding true as this is an edit form
+    createUserRecord(formData, history, true);
   };
   return (
     <Fragment>
@@ -470,11 +554,16 @@ const UserCreateRecord = ({ createUserRecord, history }) => {
   );
 };
 
-UserCreateRecord.propTypes = {
-  // Our action createRecord is a function
+UserEditRecord.propTypes = {
   createUserRecord: PropTypes.func.isRequired,
+  getCurrentRecordUser: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createUserRecord })(
-  withRouter(UserCreateRecord)
-);
+const mapStateToProps = (state) => ({
+  record: state.record,
+});
+
+export default connect(mapStateToProps, {
+  createUserRecord,
+  getCurrentRecordUser,
+})(withRouter(UserEditRecord));
