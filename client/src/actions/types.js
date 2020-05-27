@@ -12,3 +12,7 @@ export const LOGOUT = 'LOGOUT';
 export const GET_PROFILE = 'GET_PROFILE';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
+
+export const GET_RECORD = 'GET_RECORD';
+export const CLEAR_RECORD = 'CLEAR_RECORD';
+export const RECORD_ERROR = 'RECORD_ERROR';

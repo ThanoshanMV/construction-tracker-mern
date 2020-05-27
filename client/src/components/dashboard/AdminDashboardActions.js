@@ -10,7 +10,7 @@ const AdminDashboardActions = () => {
       <Link to='/admin/profile/me' className='btn btn-light'>
         <i className='fas fa-user-circle text-primary'></i> View Profile
       </Link>
-      <Link to='/add-record' className='btn btn-light'>
+      <Link to='/admin-add-record' className='btn btn-light'>
         <i className='fas fa-plus text-primary'></i> Add Record
       </Link>
       <Link to='/register' className='btn btn-light'>
