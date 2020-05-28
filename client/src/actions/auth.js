@@ -109,7 +109,9 @@ export const loadAdmin = () => async (dispatch) => {
 };
 
 // Register User (Employee)
-export const register = ({ name, email, password }) => async (dispatch) => {
+export const register = ({ name, email, password, history }) => async (
+  dispatch
+) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -130,6 +132,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
     dispatch(setAlert('User Successfully Created', 'success'));
     // we don't have to load employee details when admin registers..(loadUser())
     dispatch(loadAdmin());
+    history.push('/admin-dashboard');
   } catch (err) {
     const errors = err.response.data.errors;
 

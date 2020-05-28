@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
@@ -14,7 +14,14 @@ import Spinner from '../layout/Spinner';
  *
  */
 
-const Register = ({ setAlert, register, isRegistered, isAdmin, loading }) => {
+const Register = ({
+  setAlert,
+  register,
+  isRegistered,
+  isAdmin,
+  loading,
+  history,
+}) => {
   /**
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
@@ -37,14 +44,14 @@ const Register = ({ setAlert, register, isRegistered, isAdmin, loading }) => {
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      register({ name, email, password });
+      register({ name, email, password, history });
     }
   };
 
   // Redirect if successfully registered user
-  if (isRegistered) {
+  /*if (isRegistered) {
     return <Redirect to='/admin-dashboard' />;
-  }
+  } */
 
   /**
    * As Admin only can register Users, we've made register route private to Admin.
@@ -141,4 +148,6 @@ const mapStateToProps = (state) => ({
  * 1 : state that you want to map
  * 2 : an object with actions that you want to use.
  */
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, { setAlert, register })(
+  withRouter(Register)
+);
