@@ -18,26 +18,36 @@ import { logout } from '../../actions/auth';
 
 const Navbar = ({ auth: { isAuthenticated, isAdmin, loading }, logout }) => {
   const adminDashboard = (
-    <Link to='/admin-dashboard'>
-      <i className='fas fa-user'></i>{' '}
-      <span className='hide-sm'>Admin Dashboard</span>
-    </Link>
+    <ul>
+      <li>
+        <Link to='/admin-dashboard'>
+          <i className='fas fa-user'></i>{' '}
+          <span className='hide-sm'>Admin Dashboard</span>
+        </Link>
+      </li>
+      <li>
+        <Link to='/profiles'>
+          <i className='fas fa-users'></i>{' '}
+          <span className='hide-sm'>Users</span>
+        </Link>
+      </li>
+    </ul>
   );
 
   const userDashboard = (
-    <Link to='/user-dashboard'>
-      <i className='fas fa-user'></i>{' '}
-      <span className='hide-sm'>User Dashboard</span>
-    </Link>
+    <li>
+      <Link to='/user-dashboard'>
+        <i className='fas fa-user'></i>{' '}
+        <span className='hide-sm'>User Dashboard</span>
+      </Link>
+    </li>
   );
 
   const authLinks = (
     <ul>
-      <li>
-        {!loading && (
-          <Fragment>{isAdmin ? adminDashboard : userDashboard}</Fragment>
-        )}
-      </li>
+      {!loading && (
+        <Fragment>{isAdmin ? adminDashboard : userDashboard}</Fragment>
+      )}
       <li>
         <a onClick={logout} href='#!'>
           <i className='fas fa-sign-out-alt'></i>{' '}

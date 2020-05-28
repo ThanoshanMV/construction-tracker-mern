@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import { GET_PROFILE, PROFILE_ERROR } from './types';
+import { GET_PROFILE, PROFILE_ERROR, GET_PROFILES } from './types';
 
 // Get current admin profile
 export const getCurrentAdminProfile = () => async (dispatch) => {
@@ -12,6 +12,58 @@ export const getCurrentAdminProfile = () => async (dispatch) => {
       type: GET_PROFILE,
       payload: res.data,
     });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get all profiles
+export const getProfiles = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/admin/profile');
+
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get profile by id
+export const getProfileById = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/admin/profile/user/${userId}`);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Delete profile by id
+export const deleteProfileById = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/admin/profile/user/${userId}`);
+
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+    dispatch(getProfiles());
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
