@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createAdminRecord, getCurrentRecord } from '../../actions/record';
+const moment = require('moment'); // require
 
 const AdminEditRecord = ({
   record: { record, loading },
@@ -49,7 +50,7 @@ const AdminEditRecord = ({
       dateOfApplicationRequested:
         loading || !record.dateOfApplicationRequested
           ? ''
-          : record.dateOfApplicationRequested,
+          : moment(record.dateOfApplicationRequested).format('YYYY-MM-DD'),
       purpose: loading || !record.purpose ? '' : record.purpose,
       stage1Comments:
         loading || !record.stage1Comments ? '' : record.stage1Comments,
@@ -64,7 +65,7 @@ const AdminEditRecord = ({
       dateOfApplicationSubmitted:
         loading || !record.dateOfApplicationSubmitted
           ? ''
-          : record.dateOfApplicationSubmitted,
+          : moment(record.dateOfApplicationSubmitted).format('YYYY-MM-DD'),
       relatedDocumentsSubmitted:
         loading || !record.relatedDocumentsSubmitted
           ? ''
@@ -92,7 +93,9 @@ const AdminEditRecord = ({
       dateOfApplicationForwardedToPlanningCommittee:
         loading || !record.dateOfApplicationForwardedToPlanningCommittee
           ? ''
-          : record.dateOfApplicationForwardedToPlanningCommittee,
+          : moment(record.dateOfApplicationForwardedToPlanningCommittee).format(
+              'YYYY-MM-DD'
+            ),
       planningCommitteeDecision:
         loading || !record.planningCommitteeDecision
           ? ''
@@ -102,7 +105,7 @@ const AdminEditRecord = ({
       dateOfPlanningCommitteeDecision:
         loading || !record.dateOfPlanningCommitteeDecision
           ? ''
-          : record.dateOfPlanningCommitteeDecision,
+          : moment(record.dateOfPlanningCommitteeDecision).format('YYYY-MM-DD'),
       statusOfTheApplication:
         loading || !record.statusOfTheApplication
           ? ''
@@ -110,7 +113,7 @@ const AdminEditRecord = ({
       dateOfDecisionGivenToApplicant:
         loading || !record.dateOfDecisionGivenToApplicant
           ? ''
-          : record.dateOfDecisionGivenToApplicant,
+          : moment(record.dateOfDecisionGivenToApplicant).format('YYYY-MM-DD'),
       stage7Comments:
         loading || !record.stage7Comments ? '' : record.stage7Comments,
     });
