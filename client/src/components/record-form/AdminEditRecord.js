@@ -2,13 +2,19 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createAdminRecord, getCurrentRecord } from '../../actions/record';
+import {
+  createAdminRecord,
+  getCurrentRecord,
+  deleteRecord,
+} from '../../actions/record';
+
 const moment = require('moment'); // require
 
 const AdminEditRecord = ({
   record: { record, loading },
   createAdminRecord,
   getCurrentRecord,
+  deleteRecord,
   history,
 }) => {
   const [formData, setFormData] = useState({
@@ -552,6 +558,12 @@ const AdminEditRecord = ({
           Go Back
         </Link>
         <input type='submit' className='btn btn-primary my-1' />
+        <button
+          onClick={() => deleteRecord(record.referenceNumber, history)}
+          className='btn btn-danger'
+        >
+          Delete Record
+        </button>
       </form>
     </Fragment>
   );
@@ -560,6 +572,7 @@ const AdminEditRecord = ({
 AdminEditRecord.propTypes = {
   createAdminRecord: PropTypes.func.isRequired,
   getCurrentRecord: PropTypes.func.isRequired,
+  deleteRecord: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -569,4 +582,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   createAdminRecord,
   getCurrentRecord,
+  deleteRecord,
 })(withRouter(AdminEditRecord));

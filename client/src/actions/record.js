@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import { RECORD_ERROR, GET_RECORD } from './types';
+import { RECORD_ERROR, GET_RECORD, CLEAR_RECORD } from './types';
 
 // Create or Update Record by Admin
 
@@ -114,5 +114,45 @@ export const getCurrentRecordUser = (id, history) => async (dispatch) => {
       payload: { msg: err.response.statusText, status: err.response.status },
     });
     dispatch(setAlert('Record Not Found!', 'danger'));
+  }
+};
+
+// Admin Delete Record
+export const deleteRecord = (id, history) => async (dispatch) => {
+  if (window.confirm('Are you sure to delete this record?')) {
+    try {
+      const res = await axios.delete(`/api/records/${id}`);
+
+      dispatch({
+        type: CLEAR_RECORD,
+        payload: res.data,
+      });
+      history.push('/admin-dashboard');
+    } catch (err) {
+      dispatch({
+        type: RECORD_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  }
+};
+
+// User Delete Record
+export const deleteRecordUser = (id, history) => async (dispatch) => {
+  if (window.confirm('Are you sure to delete this record?')) {
+    try {
+      const res = await axios.delete(`/api/records/${id}`);
+
+      dispatch({
+        type: CLEAR_RECORD,
+        payload: res.data,
+      });
+      history.push('/user-dashboard');
+    } catch (err) {
+      dispatch({
+        type: RECORD_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
   }
 };
