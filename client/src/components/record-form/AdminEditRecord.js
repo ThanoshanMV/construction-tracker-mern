@@ -123,7 +123,7 @@ const AdminEditRecord = ({
       stage7Comments:
         loading || !record.stage7Comments ? '' : record.stage7Comments,
     });
-  }, [loading]);
+  }, [loading, getCurrentRecord]);
 
   // [loading] means when loading true, we'll run useEffect
 

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
@@ -14,14 +14,7 @@ import Spinner from '../layout/Spinner';
  *
  */
 
-const Register = ({
-  setAlert,
-  register,
-  isRegistered,
-  isAdmin,
-  loading,
-  history,
-}) => {
+const Register = ({ setAlert, register, isAdmin, loading, history }) => {
   /**
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
@@ -47,11 +40,6 @@ const Register = ({
       register({ name, email, password, history });
     }
   };
-
-  // Redirect if successfully registered user
-  /*if (isRegistered) {
-    return <Redirect to='/admin-dashboard' />;
-  } */
 
   /**
    * As Admin only can register Users, we've made register route private to Admin.

@@ -38,7 +38,7 @@ const AdminEditProfile = ({
       facebook: loading || !profile.social ? '' : profile.social.facebook,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading]);
+  }, [loading, getCurrentAdminProfile]);
 
   // [loading] means when loading true, we'll run useEffect
 

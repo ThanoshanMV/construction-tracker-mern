@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import AdminDashboardActions from './AdminDashboardActions';
-import Record from './Record';
 import { getCurrentAdminProfile } from '../../actions/profile';
 import SearchBar from './SearchBar';
 
@@ -17,7 +16,7 @@ const AdminDashboard = ({
   // Run getCurrentAdminProfile() only once
   useEffect(() => {
     getCurrentAdminProfile();
-  }, []);
+  }, [getCurrentAdminProfile]);
 
   return loading && profile === null ? (
     <Spinner />

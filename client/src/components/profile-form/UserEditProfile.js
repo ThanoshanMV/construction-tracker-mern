@@ -38,7 +38,7 @@ const UserEditProfile = ({
       facebook: loading || !profile.social ? '' : profile.social.facebook,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading]);
+  }, [loading, getCurrentUserProfile]);
 
   // [loading] means when loading true, we'll run useEffect
 

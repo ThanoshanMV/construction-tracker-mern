@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { Link, withRouter, Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentRecordUser } from '../../actions/record';
