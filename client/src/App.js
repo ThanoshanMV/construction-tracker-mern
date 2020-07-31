@@ -18,6 +18,7 @@ import AdminEditRecord from './components/record-form/AdminEditRecord';
 import UserEditRecord from './components/record-form/UserEditRecord';
 import Profiles from './components/profiles/Profiles';
 import AdminProfile from './components/profile/AdminProfile';
+import UserProfile from './components/profile/UserProfile';
 
 import AdminPrivateRoute from './components/routing/AdminPrivateRoute';
 import UserPrivateRoute from './components/routing/UserPrivateRoute';
@@ -139,6 +140,11 @@ const App = () => {
                 exact
                 path='/user-edit-record'
                 component={UserEditRecord}
+              />
+              <UserPrivateRoute
+                exact
+                path='/user/profile/me'
+                component={AdminProfile}
               />
             </Switch>
           </section>
