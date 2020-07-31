@@ -17,6 +17,7 @@ import UserCreateRecord from './components/record-form/UserCreateRecord';
 import AdminEditRecord from './components/record-form/AdminEditRecord';
 import UserEditRecord from './components/record-form/UserEditRecord';
 import Profiles from './components/profiles/Profiles';
+import AdminProfile from './components/profile/AdminProfile';
 
 import AdminPrivateRoute from './components/routing/AdminPrivateRoute';
 import UserPrivateRoute from './components/routing/UserPrivateRoute';
@@ -109,6 +110,11 @@ const App = () => {
                 component={AdminEditRecord}
               />
               <AdminPrivateRoute exact path='/profiles' component={Profiles} />
+              <AdminPrivateRoute
+                exact
+                path='/admin/profile/me'
+                component={AdminProfile}
+              />
               <UserPrivateRoute
                 exact
                 path='/user-dashboard'
