@@ -22,6 +22,11 @@ import UserProfile from './components/profile/UserProfile';
 
 import AdminPrivateRoute from './components/routing/AdminPrivateRoute';
 import UserPrivateRoute from './components/routing/UserPrivateRoute';
+
+// reset page
+import Reset from './components/auth/Reset';
+import UpdatePassword from './components/auth/UpdatePassword';
+
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -84,6 +89,8 @@ const App = () => {
             <Switch>
               <Route exact path='/admin-login' component={AdminLogin} />
               <Route exact path='/user-login' component={UserLogin} />
+              <Route exact path='/reset-password' component={Reset} />
+              <Route exact path='/reset/:token' component={UpdatePassword} />
               <AdminPrivateRoute
                 exact
                 path='/admin-dashboard'

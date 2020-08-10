@@ -25,6 +25,8 @@ app.use('/api/employee/profile', require('./routes/api/employee/profile'));
 
 app.use('/api/records', require('./routes/api/record/records'));
 
+app.use('/api', require('./routes/api/auth'));
+
 //put port in a variable
 const PORT = process.env.PORT || 5000;
 

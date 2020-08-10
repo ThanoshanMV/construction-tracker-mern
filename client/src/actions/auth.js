@@ -217,3 +217,50 @@ export const logout = () => (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };
+
+// Reset Password
+export const resetPassword = (email) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Preparing data to be sent
+  const body = JSON.stringify({ email });
+
+  try {
+    await axios.post('api/reset-password', body, config);
+    dispatch(setAlert('Check your email', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+  }
+};
+
+// Update Password
+export const updatePassword = (password, token, history) => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Preparing data to be sent
+  const body = JSON.stringify({ password, token });
+
+  try {
+    await axios.post('/api/new-password', body, config);
+    history.push('/');
+    dispatch(setAlert('Password successfully updated!', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+  }
+};
