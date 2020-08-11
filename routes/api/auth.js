@@ -4,7 +4,11 @@
 const express = require('express');
 //use express router
 const router = express.Router();
+//we need to bring in config package to access username & password inside config
 const config = require('config');
+//get mongoURI value
+const username = config.get('user');
+const password = config.get('pass');
 const bcrypt = require('bcryptjs');
 
 const { check, validationResult } = require('express-validator');
@@ -47,37 +51,45 @@ router.post('/reset-password', async (req, res) => {
       admin.expireToken = Date.now() + 3600000;
       await admin.save();
 
-      var nodemailer = require('nodemailer');
-      var sgTransport = require('nodemailer-sendgrid-transport');
+      /*Sending mail using nodemailer */
+      const nodemailer = require('nodemailer');
 
-      var options = {
-        auth: {
-          api_key:
-            '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',
-        },
-      };
+      // async..await is not allowed in global scope, must use a wrapper
+      async function main() {
+        // Generate test SMTP service account from ethereal.email
+        // Only needed if you don't have a real mail account for testing
+        // let testAccount = await nodemailer.createTestAccount();
 
-      var mailer = nodemailer.createTransport(sgTransport(options));
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure: false, // true for 465, false for other ports
+          auth: {
+            user: username, // generated ethereal user
+            pass: password, // generated ethereal password
+          },
+        });
 
-      var mail = {
-        to: admin.email,
-        from: 'mvthanoshan9@gmail.com',
-        subject: 'Reset Password',
-        text: 'Reset Password',
-        html: `
-        <p> You have requested for passwrd reset</p>
-        <br>
-        <h3>Click in this 
-        <a href="http://localhost:3000/reset/${token}">to reset password</a>
-        `,
-      };
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+          from: '"Construction Tracker" <mvthanoshan9@gmail.com>', // sender address
+          to: admin.email, // list of receivers
+          subject: 'Reset Password: Construction Tracker', // Subject line
+          text: 'Hello world?', // plain text body
+          html: `
+    <p> You have requested for password reset</p>
+    <br>
+    <h3>Click in this 
+    <a href="http://localhost:3000/reset/${token}">to reset password</a>
+    `,
+          // html body
+        });
 
-      mailer.sendMail(mail, function (err, res) {
-        if (err) {
-          console.log(err);
-        }
-        console.log(res);
-      });
+        console.log('Message sent: %s', info.messageId);
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+      }
+      main().catch(console.error);
       return res.json({ message: 'Check your email' });
     }
 
@@ -88,37 +100,45 @@ router.post('/reset-password', async (req, res) => {
       user.expireToken = Date.now() + 3600000;
       await user.save();
 
-      var nodemailer = require('nodemailer');
-      var sgTransport = require('nodemailer-sendgrid-transport');
+      /*Sending mail using nodemailer */
+      const nodemailer = require('nodemailer');
 
-      var options = {
-        auth: {
-          api_key:
-            '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',
-        },
-      };
+      // async..await is not allowed in global scope, must use a wrapper
+      async function main() {
+        // Generate test SMTP service account from ethereal.email
+        // Only needed if you don't have a real mail account for testing
+        // let testAccount = await nodemailer.createTestAccount();
 
-      var mailer = nodemailer.createTransport(sgTransport(options));
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure: false, // true for 465, false for other ports
+          auth: {
+            user: username, // generated ethereal user
+            pass: password, // generated ethereal password
+          },
+        });
 
-      var mail = {
-        to: user.email,
-        from: 'mvthanoshan9@gmail.com',
-        subject: 'Reset Password',
-        text: 'Reset Password',
-        html: `
-          <p> You have requested for passwrd reset</p>
-          <br>
-          <h3>Click in this 
-          <a href="http://localhost:3000/reset/${token}">to reset password</a>
-          `,
-      };
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+          from: '"Construction Tracker" <mvthanoshan9@gmail.com>', // sender address
+          to: user.email, // list of receivers
+          subject: 'Reset Password: Construction Tracker', // Subject line
+          text: 'Hello world?', // plain text body
+          html: `
+    <p> You have requested for password reset</p>
+    <br>
+    <h3>Click in this 
+    <a href="http://localhost:3000/reset/${token}">to reset password</a>
+    `,
+          // html body
+        });
 
-      mailer.sendMail(mail, function (err, res) {
-        if (err) {
-          console.log(err);
-        }
-        console.log(res);
-      });
+        console.log('Message sent: %s', info.messageId);
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+      }
+      main().catch(console.error);
       return res.json({ message: 'Check your email' });
     }
 

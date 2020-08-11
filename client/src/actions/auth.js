@@ -255,8 +255,9 @@ export const updatePassword = (password, token, history) => async (
 
   try {
     await axios.post('/api/new-password', body, config);
-    history.push('/');
-    dispatch(setAlert('Password successfully updated!', 'success'));
+    dispatch(
+      setAlert('Password successfully updated. Please Log In!', 'success')
+    );
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
