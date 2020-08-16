@@ -72,6 +72,9 @@ const AdminLogin = ({ loginAdmin, isAuthenticated }) => {
           />
         </div>
         <input type='submit' className='btn btn-primary' value='Login' />
+        <Link className='btn btn-danger my-1' to='/reset-password'>
+          Forgot Password?
+        </Link>
         <Link className='btn btn-light my-1' to='/'>
           Go Back
         </Link>

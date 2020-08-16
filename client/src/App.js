@@ -125,6 +125,11 @@ const App = () => {
               />
               <UserPrivateRoute
                 exact
+                path='/user/profile/me'
+                component={UserProfile}
+              />
+              <UserPrivateRoute
+                exact
                 path='/user-dashboard'
                 component={UserDashboard}
               />
