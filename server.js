@@ -18,6 +18,7 @@ app.get('/', (req, res) => res.send('API Running'));
 app.use('/api/admin/users', require('./routes/api/admin/users'));
 app.use('/api/admin/auth', require('./routes/api/admin/auth'));
 app.use('/api/admin/profile', require('./routes/api/admin/profile'));
+app.use('/api/admin/profile/password', require('./routes/api/admin/profile'));
 
 app.use('/api/employee/users', require('./routes/api/employee/users'));
 app.use('/api/employee/auth', require('./routes/api/employee/auth'));

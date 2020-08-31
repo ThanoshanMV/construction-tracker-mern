@@ -13,6 +13,10 @@ const EmployeeUser = require('../../../models/employee/User');
 const Profile = require('../../../models/admin/Profile');
 const EmployeeProfile = require('../../../models/employee/Profile');
 
+const { ObjectId } = require('mongodb'); // or ObjectID
+const bcrypt = require('bcryptjs');
+const { body } = require('express-validator');
+
 //create route
 
 // @route         GET api/admin/profile/me
@@ -229,6 +233,93 @@ router.delete('/user/:user_id', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// @route         POST api/admin/profile/password
+// @description   Update password
+// @access        Private
+
+router.post(
+  '/password',
+  auth,
+  [
+    //Using express-validator to validate inputs
+    check('currentPassword', 'Current Password is required').not().isEmpty(),
+    check(
+      'newPassword',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 }),
+    body('confirmNewPassword').custom((value, { req }) => {
+      if (value !== req.body.newPassword) {
+        throw new Error('Confirmation password does not match password');
+      }
+      // Indicates the success of this synchronous custom validator
+      return true;
+    }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    //if there is an error
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    //No errors
+
+    let { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+    try {
+      let id = req.user.id;
+
+      let o_id = new ObjectId(id); // id as a string is passed
+
+      //We're getting req.user.id from token
+      let user = await User.findOne({ _id: o_id });
+
+      if (!user) {
+        return res.json({ msg: 'User does not exist' });
+      }
+
+      console.log(newPassword);
+      console.log(confirmNewPassword);
+
+      //if user exists
+      if (newPassword == confirmNewPassword) {
+        console.log('newPassword == confirmNewPassword');
+
+        // Check whether the password matches
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+        if (!isMatch) {
+          //Password does not match
+          return res
+            .status(400)
+            .json({ errors: [{ msg: 'Password does not match' }] });
+        }
+        // password matches
+        console.log('password matches');
+
+        const salt = await bcrypt.genSalt(10); //10 is enough as per documentation
+        newPassword = await bcrypt.hash(newPassword, salt);
+        console.log('newPassword = ' + newPassword);
+        user.password = newPassword;
+        //Update
+        user = await User.findOneAndUpdate(
+          { _id: o_id },
+          { $set: { password: newPassword } },
+          { new: true }
+        );
+        console.log('Password updated!');
+        await user.save();
+        return res.json(user);
+      } else {
+        return res.json({ msg: 'Password does not match' });
+      }
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 //export the route
 module.exports = router;
