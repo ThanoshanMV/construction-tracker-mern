@@ -6,6 +6,7 @@ import {
   createUserProfile,
   getCurrentUserProfile,
 } from '../../actions/profile';
+import UserChangePassword from './UserChangePassword';
 
 const UserEditProfile = ({
   profile: { profile, loading },
@@ -148,6 +149,7 @@ const UserEditProfile = ({
           Go Back
         </Link>
       </form>
+      <UserChangePassword />
     </Fragment>
   );
 };
