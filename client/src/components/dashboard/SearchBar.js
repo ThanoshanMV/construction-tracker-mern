@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrentRecord } from '../../actions/record';
+import { getSearchRecords } from '../../actions/record';
 
-const SearchBar = ({ getCurrentRecord, history }) => {
+const SearchBar = ({ getSearchRecords }) => {
   const [formData, setFormData] = useState({
     search: '',
   });
@@ -17,7 +17,7 @@ const SearchBar = ({ getCurrentRecord, history }) => {
   // Creating onSubmit
   const onSubmit = (e) => {
     e.preventDefault();
-    getCurrentRecord(search, history);
+    getSearchRecords(search);
   };
 
   return (
@@ -42,7 +42,7 @@ const SearchBar = ({ getCurrentRecord, history }) => {
 
 SearchBar.propTypes = {
   // Our action createAdminProfile is a function
-  getCurrentRecord: PropTypes.func.isRequired,
+  getSearchRecords: PropTypes.func.isRequired,
 };
 
-export default connect(null, { getCurrentRecord })(withRouter(SearchBar));
+export default connect(null, { getSearchRecords })(withRouter(SearchBar));

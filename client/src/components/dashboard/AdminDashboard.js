@@ -6,12 +6,13 @@ import Spinner from '../layout/Spinner';
 import AdminDashboardActions from './AdminDashboardActions';
 import { getCurrentAdminProfile } from '../../actions/profile';
 import SearchBar from './SearchBar';
+import AdminRecordDisplay from './AdminRecordDisplay';
 
 const AdminDashboard = ({
   getCurrentAdminProfile,
   auth: { user },
   profile: { profile, loading },
-  record,
+  record: { record },
 }) => {
   // Run getCurrentAdminProfile() only once
   useEffect(() => {
@@ -30,6 +31,11 @@ const AdminDashboard = ({
         <Fragment>
           <AdminDashboardActions />
           <SearchBar />
+          {!Array.isArray(record) || !record.length ? (
+            <Fragment></Fragment>
+          ) : (
+            <AdminRecordDisplay record={record} />
+          )}
         </Fragment>
       ) : (
         <Fragment>

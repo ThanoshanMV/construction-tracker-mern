@@ -29,6 +29,7 @@ app.use(
 );
 
 app.use('/api/records', require('./routes/api/record/records'));
+app.use('/api/records/search', require('./routes/api/record/records'));
 
 app.use('/api', require('./routes/api/auth'));
 

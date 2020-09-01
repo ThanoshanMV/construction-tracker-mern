@@ -156,3 +156,20 @@ export const deleteRecordUser = (id, history) => async (dispatch) => {
     }
   }
 };
+
+// Get search records user
+export const getSearchRecords = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/records/search/${id}`);
+    dispatch({
+      type: GET_RECORD,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: RECORD_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    dispatch(setAlert('Record Not Found!', 'danger'));
+  }
+};

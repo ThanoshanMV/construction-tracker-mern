@@ -137,15 +137,13 @@ router.post(
 router.get('/:id', auth, async (req, res) => {
   try {
     // find the record by its reference number
-    const record = await Record.findOne({
-      referenceNumber: req.params.id,
-    });
+    const record = await Record.findOne({ referenceNumber: req.params.id });
 
     // if that particular record is not found
     if (!record) return res.status(400).json({ msg: 'Record not found' });
 
     //if found
-    res.json(record);
+    return res.json(record);
   } catch (err) {
     console.error(err.message);
     if (err.kind == 'ObjectId') {
@@ -178,6 +176,31 @@ router.delete('/:id', auth, async (req, res) => {
     console.error(err.message);
     if (err.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'Record not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route         GET api/records/search/:id
+// @description   Get all records by reference number
+// @access        Private
+
+router.get('/search/:id', auth, async (req, res) => {
+  try {
+    // db.products.find({ sku: { $regex: /789$/ } });
+
+    let refNum = req.params.id;
+    const record = await Record.find({ referenceNumber: { $regex: refNum } });
+
+    // if that particular record is not found
+    if (!record) return res.status(201).json({ msg: 'Record not found' });
+
+    //if found
+    return res.json(record);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res.status(201).json({ msg: 'Record not found' });
     }
     res.status(500).send('Server Error');
   }

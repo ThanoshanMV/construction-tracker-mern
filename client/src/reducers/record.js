@@ -1,7 +1,7 @@
 import { GET_RECORD, RECORD_ERROR, CLEAR_RECORD } from '../actions/types';
 
 const initialState = {
-  record: null,
+  record: [],
   loading: true,
   error: {},
 };
