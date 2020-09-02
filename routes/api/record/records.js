@@ -181,21 +181,46 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-// @route         GET api/records/search/:id
-// @description   Get all records by reference number
+// @route         GET api/records/search/:searchBy/:id
+// @description   Get all records by :searchBy/:id
 // @access        Private
 
-router.get('/search/:id', auth, async (req, res) => {
+router.get('/search/:searchBy/:id', auth, async (req, res) => {
   try {
     // db.products.find({ sku: { $regex: /789$/ } });
 
-    let refNum = req.params.id;
-    const record = await Record.find({ referenceNumber: { $regex: refNum } });
+    let id = req.params.id;
+    let searchBy = req.params.searchBy;
+    let record;
 
+    if (searchBy == 'filterBy') {
+      record = await Record.find({
+        referenceNumber: { $regex: id, $options: 'i' },
+      });
+      if (!Array.isArray(record) || !record.length) {
+        record = await Record.find({ purpose: { $regex: id, $options: 'i' } });
+      }
+    }
+
+    if (searchBy == 'referenceNumber') {
+      record = await Record.find({
+        referenceNumber: { $regex: id, $options: 'i' },
+      });
+    }
+
+    if (searchBy == 'purpose') {
+      record = await Record.find({ purpose: { $regex: id, $options: 'i' } });
+    }
     // if that particular record is not found
-    if (!record) return res.status(201).json({ msg: 'Record not found' });
+    if (!Array.isArray(record) || !record.length) {
+      return res.status(201).json({ msg: 'Record not found' });
+    }
 
     //if found
+    console.log(req.params.id);
+    console.log(id);
+    console.log(searchBy);
+    console.log(record);
     return res.json(record);
   } catch (err) {
     console.error(err.message);

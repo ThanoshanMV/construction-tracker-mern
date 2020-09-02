@@ -158,17 +158,33 @@ export const deleteRecordUser = (id, history) => async (dispatch) => {
 };
 
 // Get search records user
-export const getSearchRecords = (id) => async (dispatch) => {
+export const getSearchRecords = (formData) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/records/search/${id}`);
-    dispatch({
-      type: GET_RECORD,
-      payload: res.data,
-    });
+    console.log(formData);
+    const { search, searchBy } = formData;
+    console.log(search);
+    console.log(searchBy);
+
+    const res = await axios.get(`/api/records/search/${searchBy}/${search}`);
+    console.log('res.data.msg = ' + res.data.msg);
+    if (res.data.msg == 'Record not found') {
+      dispatch({
+        type: CLEAR_RECORD,
+      });
+      dispatch(setAlert('Record Not Found!', 'danger'));
+    } else {
+      dispatch({
+        type: GET_RECORD,
+        payload: res.data,
+      });
+    }
   } catch (err) {
     dispatch({
       type: RECORD_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    dispatch({
+      type: CLEAR_RECORD,
     });
     dispatch(setAlert('Record Not Found!', 'danger'));
   }
