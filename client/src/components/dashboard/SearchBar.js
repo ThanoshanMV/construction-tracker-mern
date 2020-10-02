@@ -23,9 +23,6 @@ const SearchBar = ({ getSearchRecords }) => {
 
   return (
     <div className='my-2'>
-      <p className='lead'>
-        <i className='fa fa-search'></i> Search
-      </p>
       <form className='example form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
           <label className='lead' htmlFor='searchBy'>
