@@ -1,15 +1,7 @@
-/*Basic resets and adding core styles*/
-
-/*CSS variables*/
-
-/*:root is a pseudo-class selector that 
-they will be available globally and can be 
-accessed from any other selector in the style sheet.*/
+/* Global Styles */
 :root {
-  --primary-color: #a719c4;
-  --secondary-color: #f5c42f;
-  --text-color: #efeff3;
-  --dark-color: #2d2254;
+  --primary-color: #17a2b8;
+  --dark-color: #343a40;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
@@ -22,12 +14,11 @@ accessed from any other selector in the style sheet.*/
 }
 
 body {
-  font-family: 'Ubuntu', 'sans-serif';
-  /*By default 1rem is 16px. You can manually change it*/
+  font-family: 'Raleway', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background: var(--dark-color);
-  color: var(--text-color);
+  background-color: #fff;
+  color: #333;
 }
 
 a {
@@ -77,10 +68,6 @@ img {
 
 .text-primary {
   color: var(--primary-color);
-}
-
-.text-secondary {
-  color: var(--secondary-color);
 }
 
 .text-dark {
@@ -237,6 +224,16 @@ img {
   margin: 1.5rem 0;
 }
 
+/* Overlay */
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* Forms */
 .form .form-group {
   margin: 1.2rem 0;
@@ -251,8 +248,8 @@ img {
 .form input[type='text'],
 .form input[type='email'],
 .form input[type='password'],
-.form input[type='date'],
 .form input[type='number'],
+.form input[type='date'],
 .form select,
 .form textarea {
   display: block;
@@ -260,19 +257,11 @@ img {
   padding: 0.4rem;
   font-size: 1.2rem;
   border: 1px solid #ccc;
-  background-color: var(--light-color);
 }
 
 .form input[type='submit'],
 button {
   font: inherit;
-}
-
-.form input[type='checkbox'] {
-  width: 1.5rem; /*Desired width*/
-  height: 1.5rem; /*Desired height*/
-  cursor: pointer;
-  margin-left: 1.5rem;
 }
 
 .form .social-input {
@@ -293,12 +282,21 @@ button {
 .form .social-input i.fa-instagram {
   color: #3f729b;
 }
+.form .social-input i.fa-youtube {
+  color: #c4302b;
+}
+.form .social-input i.fa-linkedin {
+  color: #0077b5;
+}
 
 .table th,
 .table td {
   padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid var(--secondary-color);
+}
+
+.table th {
+  background: var(--light-color);
 }
 
 /* Navbar */
@@ -311,9 +309,8 @@ button {
   z-index: 1;
   width: 100%;
   top: 0;
-  border-bottom: solid 2px var(--secondary-color);
+  border-bottom: solid 1px var(--primary-color);
   opacity: 0.9;
-  background: var(--primary-color);
 }
 
 .navbar ul {
@@ -327,7 +324,7 @@ button {
 }
 
 .navbar a:hover {
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 .navbar .welcome span {
@@ -337,7 +334,7 @@ button {
 /* Landing Page */
 .landing {
   position: relative;
-  background: url('./img/showcase.png') no-repeat center center/cover;
+  background: url('./img/showcase.jpg') no-repeat center center/cover;
   height: 100vh;
 }
 
