@@ -270,6 +270,7 @@ const UserEditRecord = ({
             value={payment}
             onChange={(e) => onChange(e)}
           />
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 1 ends*/}
@@ -330,6 +331,7 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 2  ends*/}
@@ -364,6 +366,7 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 3 ends*/}
@@ -398,6 +401,7 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 4 ends*/}
@@ -433,6 +437,7 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 5 ends*/}
@@ -498,6 +503,7 @@ const UserEditRecord = ({
             value={dateOfPlanningCommitteeDecision}
             onChange={(e) => onChange(e)}
           />
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 6 ends*/}

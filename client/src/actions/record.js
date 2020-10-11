@@ -189,3 +189,35 @@ export const getSearchRecords = (formData) => async (dispatch) => {
     dispatch(setAlert('Record Not Found!', 'danger'));
   }
 };
+
+// admin edit records
+export const updateAdminRecord = (formData, history, edit = true) => async (
+  dispatch
+) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const res = await axios.post('/api/records', formData, config);
+
+    dispatch({
+      type: GET_RECORD,
+      payload: res.data,
+    });
+
+    dispatch(setAlert(edit ? 'Record Updated' : 'Record Created', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: RECORD_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};

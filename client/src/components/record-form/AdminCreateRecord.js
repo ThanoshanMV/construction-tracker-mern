@@ -3,9 +3,13 @@ import React, { Fragment, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createAdminRecord } from '../../actions/record';
+import { createAdminRecord, updateAdminRecord } from '../../actions/record';
 
-const AdminCreateRecord = ({ createAdminRecord, history }) => {
+const AdminCreateRecord = ({
+  createAdminRecord,
+  updateAdminRecord,
+  history,
+}) => {
   const [formData, setFormData] = useState({
     status: '',
     referenceNumber: '',
@@ -63,8 +67,9 @@ const AdminCreateRecord = ({ createAdminRecord, history }) => {
     stage7Comments,
   } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   // Creating onSubmit
   const onSubmit = (e) => {
@@ -124,7 +129,7 @@ const AdminCreateRecord = ({ createAdminRecord, history }) => {
           <textarea
             name='stage1Comments'
             value={stage1Comments}
-            onChange={(e) => onChange(e)}
+            onChange={onChange}
             cols='30'
             rows='5'
             placeholder='Comments'
@@ -179,6 +184,7 @@ const AdminCreateRecord = ({ createAdminRecord, history }) => {
             value={payment}
             onChange={(e) => onChange(e)}
           />
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 1 ends*/}
@@ -239,6 +245,7 @@ const AdminCreateRecord = ({ createAdminRecord, history }) => {
             rows='5'
             placeholder='Comments'
           ></textarea>
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 2  ends*/}
@@ -273,6 +280,7 @@ const AdminCreateRecord = ({ createAdminRecord, history }) => {
             rows='5'
             placeholder='Comments'
           ></textarea>
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 3 ends*/}
@@ -307,6 +315,7 @@ const AdminCreateRecord = ({ createAdminRecord, history }) => {
             rows='5'
             placeholder='Comments'
           ></textarea>
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 4 ends*/}
@@ -342,6 +351,7 @@ const AdminCreateRecord = ({ createAdminRecord, history }) => {
             rows='5'
             placeholder='Comments'
           ></textarea>
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 5 ends*/}
@@ -407,6 +417,7 @@ const AdminCreateRecord = ({ createAdminRecord, history }) => {
             value={dateOfPlanningCommitteeDecision}
             onChange={(e) => onChange(e)}
           />
+          <input type='submit' value='Save' className='btn btn-primary my-1' />
         </div>
 
         {/*stage 6 ends*/}
@@ -473,8 +484,9 @@ const AdminCreateRecord = ({ createAdminRecord, history }) => {
 AdminCreateRecord.propTypes = {
   // Our action createRecord is a function
   createAdminRecord: PropTypes.func.isRequired,
+  updateAdminRecord: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createAdminRecord })(
+export default connect(null, { createAdminRecord, updateAdminRecord })(
   withRouter(AdminCreateRecord)
 );
