@@ -129,7 +129,7 @@ const AdminCreateRecord = ({
           <textarea
             name='stage1Comments'
             value={stage1Comments}
-            onChange={onChange}
+            onChange={(e) => onChange(e)}
             cols='30'
             rows='5'
             placeholder='Comments'
