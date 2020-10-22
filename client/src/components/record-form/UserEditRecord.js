@@ -186,6 +186,8 @@ const UserEditRecord = ({
             Reference Number
           </label>
           <input
+            required={true}
+            readOnly={true}
             type='text'
             placeholder='HD2020C0001'
             name='referenceNumber'

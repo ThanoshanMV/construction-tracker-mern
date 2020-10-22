@@ -20,7 +20,19 @@ router.post(
   '/',
   [
     auth,
-    [check('referenceNumber', 'Reference Number is required').not().isEmpty()],
+    [check('referenceNumber', 'Reference number is required').not().isEmpty()],
+    [
+      check('referenceNumber', 'Ref. num should begin with HDUC2020C').matches(
+        'HDUC2020C'
+      ),
+    ],
+    [
+      check('contactNo', 'Please enter valid contact number')
+        .trim()
+        .isInt()
+        .isLength({ min: 9, max: 10 }),
+    ],
+    [check('payment', 'Payment should be a number').trim().isDecimal()],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -29,7 +41,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    //No errors
+    //No errors matches('foo', 'foo', 'i')
 
     const {
       referenceNumber,

@@ -110,7 +110,7 @@ router.post(
         const nodemailer = require('nodemailer');
 
         // async..await is not allowed in global scope, must use a wrapper
-        async function main() {
+        async function mainUser() {
           // Generate test SMTP service account from ethereal.email
           // Only needed if you don't have a real mail account for testing
           // let testAccount = await nodemailer.createTestAccount();
@@ -144,11 +144,10 @@ router.post(
           console.log('Message sent: %s', info.messageId);
           console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         }
-        main().catch(console.error);
+        mainUser().catch(console.error);
         return res.json({ message: 'Check your email' });
       }
-
-      return res.status(422).json({ error: 'User does not exist' });
+      return res.status(400).json({ errors: errors.array() });
     });
   }
 );
