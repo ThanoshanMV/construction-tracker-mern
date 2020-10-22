@@ -156,46 +156,56 @@ router.post(
 // @description   new password
 // @access        Public
 
-router.post('/new-password', async (req, res) => {
-  const { password, token } = req.body;
+router.post(
+  '/new-password',
+  [check('password', 'Please enter valid password').not().isEmpty()],
+  async (req, res) => {
+    const errors = validationResult(req);
+    //if there is an error
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  const newPassword = password;
-  const sentToken = token;
+    const { password, token } = req.body;
 
-  let admin = await Admin.findOne({
-    resetToken: sentToken,
-    expireToken: { $gt: Date.now() },
-  });
+    const newPassword = password;
+    const sentToken = token;
 
-  if (admin) {
-    //Encrypt password
-    const salt = await bcrypt.genSalt(10); //10 is enough as per documentation
-    admin.password = await bcrypt.hash(newPassword, salt);
-    admin.resetToken = undefined;
-    admin.expireToken = undefined;
-    //save admin instance to database
-    await admin.save();
-    return res.json({ message: 'Password has been successfully updated!' });
+    let admin = await Admin.findOne({
+      resetToken: sentToken,
+      expireToken: { $gt: Date.now() },
+    });
+
+    if (admin) {
+      //Encrypt password
+      const salt = await bcrypt.genSalt(10); //10 is enough as per documentation
+      admin.password = await bcrypt.hash(newPassword, salt);
+      admin.resetToken = undefined;
+      admin.expireToken = undefined;
+      //save admin instance to database
+      await admin.save();
+      return res.json({ message: 'Password has been successfully updated!' });
+    }
+
+    let user = await User.findOne({
+      resetToken: sentToken,
+      expireToken: { $gt: Date.now() },
+    });
+
+    if (user) {
+      //Encrypt password
+      const salt = await bcrypt.genSalt(10); //10 is enough as per documentation
+      user.password = await bcrypt.hash(newPassword, salt);
+      user.resetToken = undefined;
+      user.expireToken = undefined;
+      //save user instance to database
+      await user.save();
+      return res.json({ message: 'Password has been successfully updated!' });
+    }
+
+    return res.status(500).json({ error: 'Server Error' });
   }
-
-  let user = await User.findOne({
-    resetToken: sentToken,
-    expireToken: { $gt: Date.now() },
-  });
-
-  if (user) {
-    //Encrypt password
-    const salt = await bcrypt.genSalt(10); //10 is enough as per documentation
-    user.password = await bcrypt.hash(newPassword, salt);
-    user.resetToken = undefined;
-    user.expireToken = undefined;
-    //save user instance to database
-    await user.save();
-    return res.json({ message: 'Password has been successfully updated!' });
-  }
-
-  return res.status(500).json({ error: 'Server Error' });
-});
+);
 
 //export the route
 module.exports = router;

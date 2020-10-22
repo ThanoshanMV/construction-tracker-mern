@@ -258,6 +258,7 @@ export const updatePassword = (password, token, history) => async (
     dispatch(
       setAlert('Password successfully updated. Please Log In!', 'success')
     );
+    history.push('/');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
