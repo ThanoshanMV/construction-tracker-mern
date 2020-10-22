@@ -42,6 +42,37 @@ export const createAdminRecord = (formData, history, edit = false) => async (
   }
 };
 
+export const updateAdminRecord = (formData, edit = false) => async (
+  dispatch
+) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const res = await axios.post('/api/records', formData, config);
+
+    dispatch({
+      type: GET_RECORD,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('Record Updated', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: RECORD_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
 // Create or Update Record by User
 
 export const createUserRecord = (formData, history, edit = false) => async (
@@ -66,6 +97,37 @@ export const createUserRecord = (formData, history, edit = false) => async (
     if (!edit) {
       history.push('/user-dashboard');
     }
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: RECORD_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const updateUserRecord = (formData, edit = false) => async (
+  dispatch
+) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const res = await axios.post('/api/records', formData, config);
+
+    dispatch({
+      type: GET_RECORD,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('Record Updated', 'success'));
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -164,10 +226,12 @@ export const getSearchRecords = (formData) => async (dispatch) => {
     const { search, searchBy } = formData;
     console.log(search);
     console.log(searchBy);
-
-    const res = await axios.get(`/api/records/search/${searchBy}/${search}`);
+    let searcher = String(search);
+    console.log('Searcher = + ' + searcher);
+    console.log('Sending Request...');
+    const res = await axios.get(`/api/records/search/${searchBy}/${searcher}`);
     console.log('res.data.msg = ' + res.data.msg);
-    if (res.data.msg == 'Record not found') {
+    if (res.data.msg === 'Record not found') {
       dispatch({
         type: CLEAR_RECORD,
       });
@@ -187,37 +251,5 @@ export const getSearchRecords = (formData) => async (dispatch) => {
       type: CLEAR_RECORD,
     });
     dispatch(setAlert('Record Not Found!', 'danger'));
-  }
-};
-
-// admin edit records
-export const updateAdminRecord = (formData, history, edit = true) => async (
-  dispatch
-) => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const res = await axios.post('/api/records', formData, config);
-
-    dispatch({
-      type: GET_RECORD,
-      payload: res.data,
-    });
-
-    dispatch(setAlert(edit ? 'Record Updated' : 'Record Created', 'success'));
-  } catch (err) {
-    const errors = err.response.data.errors;
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-    }
-
-    dispatch({
-      type: RECORD_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
   }
 };

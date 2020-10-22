@@ -6,6 +6,7 @@ import {
   createUserRecord,
   getCurrentRecordUser,
   deleteRecordUser,
+  updateUserRecord,
 } from '../../actions/record';
 const moment = require('moment'); // require
 
@@ -14,6 +15,7 @@ const UserEditRecord = ({
   createUserRecord,
   getCurrentRecordUser,
   history,
+  updateUserRecord,
 }) => {
   const [formData, setFormData] = useState({
     referenceNumber: '',
@@ -162,6 +164,11 @@ const UserEditRecord = ({
     // adding true as this is an edit form
     createUserRecord(formData, history, true);
   };
+  const update = (e) => {
+    e.preventDefault();
+    // adding true as this is an edit form
+    updateUserRecord(formData, history, true);
+  };
   return (
     <Fragment>
       <h1 className='large text-primary'>
@@ -270,7 +277,12 @@ const UserEditRecord = ({
             value={payment}
             onChange={(e) => onChange(e)}
           />
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 1 ends*/}
@@ -331,7 +343,12 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 2  ends*/}
@@ -366,7 +383,12 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 3 ends*/}
@@ -401,7 +423,12 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 4 ends*/}
@@ -437,7 +464,12 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 5 ends*/}
@@ -503,7 +535,12 @@ const UserEditRecord = ({
             value={dateOfPlanningCommitteeDecision}
             onChange={(e) => onChange(e)}
           />
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 6 ends*/}
@@ -577,6 +614,7 @@ UserEditRecord.propTypes = {
   createUserRecord: PropTypes.func.isRequired,
   getCurrentRecordUser: PropTypes.func.isRequired,
   deleteRecordUser: PropTypes.func.isRequired,
+  updateUserRecord: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -587,4 +625,5 @@ export default connect(mapStateToProps, {
   createUserRecord,
   getCurrentRecordUser,
   deleteRecordUser,
+  updateUserRecord,
 })(withRouter(UserEditRecord));

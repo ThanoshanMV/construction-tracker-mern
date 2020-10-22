@@ -136,6 +136,7 @@ router.post(
 
 router.get('/:id', auth, async (req, res) => {
   try {
+    console.log(req.params.id);
     // find the record by its reference number
     const record = await Record.findOne({ referenceNumber: req.params.id });
 

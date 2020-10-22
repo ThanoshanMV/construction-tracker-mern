@@ -6,6 +6,7 @@ import {
   createAdminRecord,
   getCurrentRecord,
   deleteRecord,
+  updateAdminRecord,
 } from '../../actions/record';
 
 const moment = require('moment'); // require
@@ -16,6 +17,7 @@ const AdminEditRecord = ({
   getCurrentRecord,
   deleteRecord,
   history,
+  updateAdminRecord,
 }) => {
   const [formData, setFormData] = useState({
     referenceNumber: '',
@@ -164,6 +166,11 @@ const AdminEditRecord = ({
     // adding true as this is an edit form
     createAdminRecord(formData, history, true);
   };
+  const update = (e) => {
+    e.preventDefault();
+    // adding true as this is an edit form
+    updateAdminRecord(formData, history, true);
+  };
   return (
     <Fragment>
       <h1 className='large text-primary'>
@@ -272,7 +279,12 @@ const AdminEditRecord = ({
             value={payment}
             onChange={(e) => onChange(e)}
           />
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 1 ends*/}
@@ -333,7 +345,12 @@ const AdminEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 2  ends*/}
@@ -368,7 +385,12 @@ const AdminEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 3 ends*/}
@@ -403,7 +425,12 @@ const AdminEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 4 ends*/}
@@ -439,7 +466,12 @@ const AdminEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 5 ends*/}
@@ -505,7 +537,12 @@ const AdminEditRecord = ({
             value={dateOfPlanningCommitteeDecision}
             onChange={(e) => onChange(e)}
           />
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          <input
+            type='button'
+            value='Save'
+            onClick={update}
+            className='btn btn-primary my-1'
+          />
         </div>
 
         {/*stage 6 ends*/}
@@ -579,6 +616,7 @@ AdminEditRecord.propTypes = {
   createAdminRecord: PropTypes.func.isRequired,
   getCurrentRecord: PropTypes.func.isRequired,
   deleteRecord: PropTypes.func.isRequired,
+  updateAdminRecord: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -589,4 +627,5 @@ export default connect(mapStateToProps, {
   createAdminRecord,
   getCurrentRecord,
   deleteRecord,
+  updateAdminRecord,
 })(withRouter(AdminEditRecord));
