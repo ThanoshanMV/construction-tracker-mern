@@ -4,6 +4,9 @@
  */
 const mongoose = require('mongoose');
 
+// Mongoose quickstart: https://mongoosejs.com/docs/index.html (Must read)
+// Schema guide: https://mongoosejs.com/docs/guide.html
+
 const RecordSchema = new mongoose.Schema({
   /**
    * Stage 1
