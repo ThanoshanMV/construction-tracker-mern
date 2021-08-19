@@ -15,22 +15,14 @@ app.use(express.json({ extended: false }));
 app.get('/', (req, res) => res.send('API Running'));
 
 // Define Routes
-app.use('/api/admin/users', require('./routes/api/admin/users'));
-app.use('/api/admin/auth', require('./routes/api/admin/auth'));
-app.use('/api/admin/profile', require('./routes/api/admin/profile'));
-app.use('/api/admin/profile/password', require('./routes/api/admin/profile'));
-
-app.use('/api/employee/users', require('./routes/api/employee/users'));
-app.use('/api/employee/auth', require('./routes/api/employee/auth'));
-app.use('/api/employee/profile', require('./routes/api/employee/profile'));
-app.use(
-  '/api/employee/profile/password',
-  require('./routes/api/employee/profile')
-);
+app.use('/api/persons', require('./routes/api/person/persons'));
+app.use('/api/auth', require('./routes/api/person/auth'));
+app.use('/api/profiles', require('./routes/api/person/profiles'));
 
 app.use('/api/records', require('./routes/api/record/records'));
-app.use('/api/records/search', require('./routes/api/record/records'));
+// app.use('/api/records/search', require('./routes/api/record/records'));
 
+// below is for resetting the password
 app.use('/api', require('./routes/api/auth'));
 
 //put port in a variable
