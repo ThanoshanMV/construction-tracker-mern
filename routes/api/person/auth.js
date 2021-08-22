@@ -1,5 +1,7 @@
 /**
- * Person login and get person information on visit to route.
+ * API to:
+ * 1. Retrieve person information based on token
+ * 2. Authenticate person & generate token (Login scenario)
  */
 
  const express = require('express');
@@ -16,7 +18,6 @@
  // @route         GET api/auth
  // @description   Retrieve person information based on token
  // @access        Private
- 
  router.get('/', auth, async (req, res) => {
    try {
      // get all user data except for password
@@ -29,9 +30,8 @@
  });
  
  // @route         POST api/auth
- // @description   Authenticate person & get token (Login)
+ // @description   Authenticate person & generate token (Login scenario)
  // @access        Public
- 
  router.post(
    '/',
    [

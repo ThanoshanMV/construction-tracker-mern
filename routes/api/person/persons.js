@@ -1,5 +1,6 @@
 /**
- * API to manage person queries
+ * API to:
+ * 1. Register person
  */
 
  const express = require('express');
@@ -20,7 +21,6 @@
  // @route         POST api/persons
  // @description   Register Person
  // @access        Private
- 
  router.post(
    '/',
    auth,
@@ -118,7 +118,6 @@
  // @route         POST api/persons/test
  // @description   Register Person - Admin (For DEV only. Should be deleted when deploying)
  // @access        Public
- 
  router.post(
   '/test',
   [

@@ -22,7 +22,7 @@ const Navbar = ({ auth: { isAuthenticated, isAdmin, loading }, logout }) => {
       <li>
         <Link to='/admin-dashboard'>
           <i className='fas fa-user'></i>{' '}
-          <span className='hide-sm'>Admin Dashboard</span>
+          <span className='hide-sm'>Dashboard</span>
         </Link>
       </li>
       <li>
@@ -38,7 +38,7 @@ const Navbar = ({ auth: { isAuthenticated, isAdmin, loading }, logout }) => {
     <li>
       <Link to='/user-dashboard'>
         <i className='fas fa-user'></i>{' '}
-        <span className='hide-sm'>User Dashboard</span>
+        <span className='hide-sm'>Dashboard</span>
       </Link>
     </li>
   );
@@ -60,10 +60,7 @@ const Navbar = ({ auth: { isAuthenticated, isAdmin, loading }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to='/admin-login'> Admin Login</Link>
-      </li>
-      <li>
-        |<Link to='/user-login'> User Login</Link>
+        <Link to='/login'>Login</Link>
       </li>
     </ul>
   );

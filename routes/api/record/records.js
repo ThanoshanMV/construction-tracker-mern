@@ -8,9 +8,8 @@ const router = express.Router();
 const auth = require('../../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 
-const Admin = require('../../../models/admin/User');
-const Employee = require('../../../models/employee/User');
-const Record = require('../../../models/record/Record');
+const User = require('../../../models/Person');
+const Record = require('../../../models/Record');
 
 // @route         POST api/records
 // @description   Create or update records

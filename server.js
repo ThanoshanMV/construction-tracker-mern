@@ -18,9 +18,7 @@ app.get('/', (req, res) => res.send('API Running'));
 app.use('/api/persons', require('./routes/api/person/persons'));
 app.use('/api/auth', require('./routes/api/person/auth'));
 app.use('/api/profiles', require('./routes/api/person/profiles'));
-
 app.use('/api/records', require('./routes/api/record/records'));
-// app.use('/api/records/search', require('./routes/api/record/records'));
 
 // below is for resetting the password
 app.use('/api', require('./routes/api/auth'));

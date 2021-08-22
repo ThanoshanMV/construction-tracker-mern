@@ -1,12 +1,10 @@
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  USER_LOADED,
-  ADMIN_LOADED,
+  PERSON_LOADED,
   AUTH_ERROR,
   LOGIN_FAIL,
-  ADMIN_LOGIN_SUCCESS,
-  USER_LOGIN_SUCCESS,
+  LOGIN_SUCCESS,
   LOGOUT,
 } from '../actions/types';
 
@@ -32,39 +30,21 @@ export default function (state = initialState, action) {
     /**
      * Unnecessary parts are commented here
      */
-    case USER_LOADED:
+     case PERSON_LOADED:
       return {
         ...state,
         isAuthenticated: true,
-        isUser: true,
+        isAdmin: payload.isAdmin,
         loading: false,
         user: payload,
       };
-    case ADMIN_LOADED:
-      return {
-        ...state,
-        isAuthenticated: true,
-        isAdmin: true,
-        loading: false,
-        user: payload,
-      };
-    //case REGISTER_SUCCESS:
-    case USER_LOGIN_SUCCESS:
+    case LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token);
       return {
         ...state,
         ...payload,
         isAuthenticated: true,
-        isUser: true,
-        loading: false,
-      };
-    case ADMIN_LOGIN_SUCCESS:
-      localStorage.setItem('token', payload.token);
-      return {
-        ...state,
-        ...payload,
-        isAuthenticated: true,
-        isAdmin: true,
+        isAdmin: payload.isAdmin,
         loading: false,
       };
     case REGISTER_SUCCESS:
@@ -77,7 +57,6 @@ export default function (state = initialState, action) {
         isRegistered: true,
         loading: false,
       };
-
     case REGISTER_FAIL:
       return {
         ...state,
@@ -87,6 +66,7 @@ export default function (state = initialState, action) {
         isRegistered: false,
         loading: false,
       };
+    
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:

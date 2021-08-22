@@ -12,7 +12,7 @@ import { login } from '../../actions/auth';
  *
  */
 
-const UserLogin = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, isAdmin }) => {
   /**
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
@@ -30,17 +30,22 @@ const UserLogin = ({ login, isAuthenticated }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
+   login(email, password);
   };
 
   // Redirect if logged in
   if (isAuthenticated) {
-    return <Redirect to='/user-dashboard' />;
+    if(isAdmin) {
+      return <Redirect to='/admin-dashboard' />;
+    }
+    else {
+      return <Redirect to='/user-dashboard' />;
+    }
   }
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>User Sign In</h1>
+      <h1 className='large text-primary'>Sign In</h1>
       <p className='lead'>
         <i className='fas fa-user'></i> Sign into your account
       </p>
@@ -83,13 +88,15 @@ const UserLogin = ({ login, isAuthenticated }) => {
   );
 };
 
-UserLogin.propTypes = {
-  login: PropTypes.func.isRequired,
+Login.propTypes = {
+ login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  isAdmin: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  isAdmin: state.auth.isAdmin
 });
 
-export default connect(mapStateToProps, { login })(UserLogin);
+export default connect(mapStateToProps, { login })(Login);

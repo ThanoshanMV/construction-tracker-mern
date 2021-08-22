@@ -4,20 +4,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import AdminDashboardActions from './AdminDashboardActions';
-import { getCurrentAdminProfile } from '../../actions/profile';
+import { getCurrentProfile } from '../../actions/profile';
 import SearchBar from './SearchBar';
 import AdminRecordDisplay from './AdminRecordDisplay';
 
 const AdminDashboard = ({
-  getCurrentAdminProfile,
+  getCurrentProfile,
   auth: { user },
   profile: { profile, loading },
   record: { record },
 }) => {
-  // Run getCurrentAdminProfile() only once
+  // Run getCurrentProfile() only once
   useEffect(() => {
-    getCurrentAdminProfile();
-  }, [getCurrentAdminProfile]);
+    getCurrentProfile();
+  }, [getCurrentProfile]);
 
   return loading && profile === null ? (
     <Spinner />
@@ -50,7 +50,7 @@ const AdminDashboard = ({
 };
 
 AdminDashboard.propTypes = {
-  getCurrentAdminProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   record: PropTypes.object.isRequired,
@@ -62,6 +62,6 @@ const mapStateToProps = (state) => ({
   record: state.record,
 });
 
-export default connect(mapStateToProps, { getCurrentAdminProfile })(
+export default connect(mapStateToProps, { getCurrentProfile })(
   AdminDashboard
 );

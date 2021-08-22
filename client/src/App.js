@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
-import AdminLogin from './components/auth/AdminLogin';
-import UserLogin from './components/auth/UserLogin';
+import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import AdminDashboard from './components/dashboard/AdminDashboard';
 import UserDashboard from './components/dashboard/UserDashboard';
@@ -32,7 +31,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 // import { loadUser } from './actions/auth';
 // import { loadAdmin } from './actions/auth';
-import { load } from './actions/auth';
+import { loadPerson } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
 import './App.css';
@@ -69,7 +68,7 @@ const App = () => {
   useEffect(() => {
     // store.dispatch(loadUser());
     // store.dispatch(loadAdmin());
-    store.dispatch(load());
+    store.dispatch(loadPerson());
   }, []);
   // passing empty array ( [] ) as a second param. to run this effect and cleanup only once (on mount and unmount).
   /**
@@ -87,8 +86,7 @@ const App = () => {
             renders the first one that matches the current URL. */}
             <Alert />
             <Switch>
-              <Route exact path='/admin-login' component={AdminLogin} />
-              <Route exact path='/user-login' component={UserLogin} />
+              <Route exact path='/login' component={Login} />
               <Route exact path='/reset-password' component={Reset} />
               <Route exact path='/reset/:token' component={UpdatePassword} />
               <AdminPrivateRoute

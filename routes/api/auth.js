@@ -14,8 +14,7 @@ const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 
 // Models
-const Admin = require('../../models/admin/User');
-const User = require('../../models/employee/User');
+const User = require('../../models/Person');
 
 const crypto = require('crypto');
 

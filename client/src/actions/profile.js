@@ -4,10 +4,9 @@ import { setAlert } from './alert';
 import { GET_PROFILE, PROFILE_ERROR, GET_PROFILES } from './types';
 
 // Get current admin profile
-export const getCurrentAdminProfile = () => async (dispatch) => {
+export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/admin/profile/me');
-
+    const res = await axios.get('/api/profiles/me');
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
@@ -23,7 +22,7 @@ export const getCurrentAdminProfile = () => async (dispatch) => {
 // Get all profiles
 export const getProfiles = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/admin/profile');
+    const res = await axios.get('/api/profiles');
 
     dispatch({
       type: GET_PROFILES,
@@ -64,23 +63,6 @@ export const deleteProfileById = (userId) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(getProfiles());
-  } catch (err) {
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
-
-// Get current user profile
-export const getCurrentUserProfile = () => async (dispatch) => {
-  try {
-    const res = await axios.get('/api/employee/profile/me');
-
-    dispatch({
-      type: GET_PROFILE,
-      payload: res.data,
-    });
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,

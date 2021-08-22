@@ -5,19 +5,19 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import UserDashboardActions from './UserDashboardActions';
 import UserSearchBar from './UserSearchBar';
-import { getCurrentUserProfile } from '../../actions/profile';
+import { getCurrentProfile } from '../../actions/profile';
 import UserRecordDisplay from './UserRecordDisplay';
 
 const UserDashboard = ({
-  getCurrentUserProfile,
+  getCurrentProfile,
   auth: { user },
   profile: { profile, loading },
   record: { record },
 }) => {
-  // Run getCurrentUserProfile() only once
+  // Run getCurrentProfile() only once
   useEffect(() => {
-    getCurrentUserProfile();
-  }, [getCurrentUserProfile]);
+    getCurrentProfile();
+  }, [getCurrentProfile]);
 
   return loading && profile === null ? (
     <Spinner />
@@ -50,7 +50,7 @@ const UserDashboard = ({
 };
 
 UserDashboard.propTypes = {
-  getCurrentUserProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   record: PropTypes.object.isRequired,
@@ -62,6 +62,6 @@ const mapStateToProps = (state) => ({
   record: state.record,
 });
 
-export default connect(mapStateToProps, { getCurrentUserProfile })(
+export default connect(mapStateToProps, { getCurrentProfile })(
   UserDashboard
 );

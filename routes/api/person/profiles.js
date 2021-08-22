@@ -18,7 +18,6 @@ const { body } = require('express-validator');
 // @route         GET api/profiles/me
 // @description   Get current user's profile
 // @access        Private
-
 router.get('/me', auth, async (req, res) => {
   try {
     //find profile using id (id taken from token)
@@ -40,7 +39,6 @@ router.get('/me', auth, async (req, res) => {
 // @route         POST api/profiles
 // @description   Create or update user profile
 // @access        Private
-
 router.post(
   '/',
   [auth, [check('status', 'Career status is required').not().isEmpty()]],
@@ -109,8 +107,7 @@ router.post(
 
 // @route         GET api/profiles
 // @description   Get all profiles
-// @access        Private
-
+// @access        Private (Admin can only view all profiles for now)
 router.get('/', auth, async (req, res) => {
   try {
     // check if admin by using token

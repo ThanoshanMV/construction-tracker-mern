@@ -2,12 +2,13 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
-export const USER_LOADED = 'USER_LOADED';
-export const ADMIN_LOADED = 'ADMIN_LOADED';
+export const PERSON_LOADED = 'PERSON_LOADED';
+
 export const AUTH_ERROR = 'AUTH_ERROR';
-export const ADMIN_LOGIN_SUCCESS = 'ADMIN_LOGIN_SUCCESS';
-export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
+
 export const LOGOUT = 'LOGOUT';
 export const GET_PROFILE = 'GET_PROFILE';
 export const GET_PROFILES = 'GET_PROFILES';
