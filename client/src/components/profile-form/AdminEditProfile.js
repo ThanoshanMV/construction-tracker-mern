@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import AdminChangePassword from './AdminChangePassword';
 import {
   createAdminProfile,
-  getCurrentAdminProfile,
+  getCurrentProfile,
 } from '../../actions/profile';
 
 const AdminEditProfile = ({
   profile: { profile, loading },
   createAdminProfile,
-  getCurrentAdminProfile,
+  getCurrentProfile,
   history,
 }) => {
   const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const AdminEditProfile = ({
 
   // we'll use useEffect to get current profile and fetch them
   useEffect(() => {
-    getCurrentAdminProfile();
+    getCurrentProfile();
 
     // we are checking and fetching the data inside the form
     setFormData({
@@ -39,7 +39,7 @@ const AdminEditProfile = ({
       facebook: loading || !profile.social ? '' : profile.social.facebook,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading, getCurrentAdminProfile]);
+  }, [loading, getCurrentProfile]);
 
   // [loading] means when loading true, we'll run useEffect
 
@@ -152,7 +152,7 @@ const AdminEditProfile = ({
 
 AdminEditProfile.propTypes = {
   createAdminProfile: PropTypes.func.isRequired,
-  getCurrentAdminProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
 };
 
@@ -162,5 +162,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   createAdminProfile,
-  getCurrentAdminProfile,
+  getCurrentProfile,
 })(withRouter(AdminEditProfile));

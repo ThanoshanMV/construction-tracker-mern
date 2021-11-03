@@ -5,16 +5,16 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
-import { getCurrentAdminProfile } from '../../actions/profile';
+import { getCurrentProfile } from '../../actions/profile';
 
 const AdminProfile = ({
-  getCurrentAdminProfile,
+  getCurrentProfile,
   profile: { profile, loading },
   auth,
 }) => {
   useEffect(() => {
-    getCurrentAdminProfile();
-  }, [getCurrentAdminProfile]);
+    getCurrentProfile();
+  }, [getCurrentProfile]);
 
   return (
     <Fragment>
@@ -39,7 +39,7 @@ const AdminProfile = ({
 };
 
 AdminProfile.propTypes = {
-  getCurrentAdminProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -49,6 +49,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getCurrentAdminProfile })(
+export default connect(mapStateToProps, { getCurrentProfile })(
   AdminProfile
 );

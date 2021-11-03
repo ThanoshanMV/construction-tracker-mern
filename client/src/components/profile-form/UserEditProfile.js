@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   createUserProfile,
-  getCurrentUserProfile,
+  getCurrentProfile,
 } from '../../actions/profile';
 import UserChangePassword from './UserChangePassword';
 
 const UserEditProfile = ({
   profile: { profile, loading },
   createUserProfile,
-  getCurrentUserProfile,
+  getCurrentProfile,
   history,
 }) => {
   const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const UserEditProfile = ({
 
   // we'll use useEffect to get current profile and fetch them
   useEffect(() => {
-    getCurrentUserProfile();
+    getCurrentProfile();
 
     // we are checking and fetching the data inside the form
     setFormData({
@@ -39,7 +39,7 @@ const UserEditProfile = ({
       facebook: loading || !profile.social ? '' : profile.social.facebook,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading, getCurrentUserProfile]);
+  }, [loading, getCurrentProfile]);
 
   // [loading] means when loading true, we'll run useEffect
 
@@ -156,7 +156,7 @@ const UserEditProfile = ({
 
 UserEditProfile.propTypes = {
   createUserProfile: PropTypes.func.isRequired,
-  getCurrentUserProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
 };
 
@@ -166,5 +166,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   createUserProfile,
-  getCurrentUserProfile,
+  getCurrentProfile,
 })(withRouter(UserEditProfile));

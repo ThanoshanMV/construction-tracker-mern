@@ -12,7 +12,7 @@ import { login } from '../../actions/auth';
  *
  */
 
-const Login = ({ login, isAuthenticated, isAdmin }) => {
+const Login = (props) => {
   /**
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
@@ -30,12 +30,12 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-   login(email, password);
+    props.login(email, password);
   };
 
   // Redirect if logged in
-  if (isAuthenticated) {
-    if(isAdmin) {
+  if (props.isAuthenticated) {
+    if(props.isAdmin) {
       return <Redirect to='/admin-dashboard' />;
     }
     else {
@@ -55,10 +55,9 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
             Email:
           </label>
           <input
-            type='email'
+            type='text'
             placeholder='Email Address'
             name='email'
-            required
             value={email}
             onChange={(e) => onChange(e)}
           />
@@ -71,7 +70,6 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
             type='password'
             placeholder='Password'
             name='password'
-            minLength='6'
             value={password}
             onChange={(e) => onChange(e)}
           />
@@ -88,10 +86,11 @@ const Login = ({ login, isAuthenticated, isAdmin }) => {
   );
 };
 
+// Propertys' Typechecking with PropTypes!
 Login.propTypes = {
  login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-  isAdmin: PropTypes.bool
+ isAuthenticated: PropTypes.bool,
+ isAdmin: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
