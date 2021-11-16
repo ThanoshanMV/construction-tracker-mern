@@ -70,59 +70,66 @@ router.post(
       dateOfDecisionGivenToApplicant,
       stage7Comments,
     } = req.body;
-
+    
     // Build record object
-    const recordFields = {};
+    const recordFields = new Object();
+    recordFields.stage1 = new Object();
+    recordFields.stage2 = new Object();
+    recordFields.stage3 = new Object();
+    recordFields.stage4 = new Object();
+    recordFields.stage5 = new Object();
+    recordFields.stage6 = new Object();
+    recordFields.stage7 = new Object();
 
-    recordFields.referenceNumber = referenceNumber;
+    recordFields.stage1.referenceNumber = referenceNumber;
 
     if (dateOfApplicationRequested)
-      recordFields.dateOfApplicationRequested = dateOfApplicationRequested;
-    if (purpose) recordFields.purpose = purpose;
-    if (stage1Comments) recordFields.stage1Comments = stage1Comments;
-    if (applicantAddress) recordFields.applicantAddress = applicantAddress;
+      recordFields.stage1.dateOfApplicationRequested = dateOfApplicationRequested;
+    if (purpose) recordFields.stage1.purpose = purpose;
+    if (stage1Comments) recordFields.stage1.stage1Comments = stage1Comments;
+    if (applicantAddress) recordFields.stage1.applicantAddress = applicantAddress;
     if (constructionAddress)
-      recordFields.constructionAddress = constructionAddress;
-    if (contactNo) recordFields.contactNo = contactNo;
-    if (payment) recordFields.payment = payment;
+      recordFields.stage1.constructionAddress = constructionAddress;
+    if (contactNo) recordFields.stage1.contactNo = contactNo;
+    if (payment) recordFields.stage1.payment = payment;
     if (dateOfApplicationSubmitted)
-      recordFields.dateOfApplicationSubmitted = dateOfApplicationSubmitted;
+      recordFields.stage2.dateOfApplicationSubmitted = dateOfApplicationSubmitted;
     if (relatedDocumentsSubmitted)
-      recordFields.relatedDocumentsSubmitted = relatedDocumentsSubmitted;
+      recordFields.stage2.relatedDocumentsSubmitted = relatedDocumentsSubmitted;
     if (nbroRecommentationReport)
-      recordFields.nbroRecommentationReport = nbroRecommentationReport;
-    if (stage2Comments) recordFields.stage2Comments = stage2Comments;
+      recordFields.stage2.nbroRecommentationReport = nbroRecommentationReport;
+    if (stage2Comments) recordFields.stage2.stage2Comments = stage2Comments;
     if (technicalRecommendation)
-      recordFields.technicalRecommendation = technicalRecommendation;
-    if (stage3Comments) recordFields.stage3Comments = stage3Comments;
-    if (phiRecommendation) recordFields.phiRecommendation = phiRecommendation;
-    if (stage4Comments) recordFields.stage4Comments = stage4Comments;
-    if (rdaRecommendation) recordFields.rdaRecommendation = rdaRecommendation;
-    if (stage5Comments) recordFields.stage5Comments = stage5Comments;
+      recordFields.stage3.technicalRecommendation = technicalRecommendation;
+    if (stage3Comments) recordFields.stage3.stage3Comments = stage3Comments;
+    if (phiRecommendation) recordFields.stage4.phiRecommendation = phiRecommendation;
+    if (stage4Comments) recordFields.stage4.stage4Comments = stage4Comments;
+    if (rdaRecommendation) recordFields.stage5.rdaRecommendation = rdaRecommendation;
+    if (stage5Comments) recordFields.stage5.stage5Comments = stage5Comments;
     if (dateOfApplicationForwardedToPlanningCommittee)
-      recordFields.dateOfApplicationForwardedToPlanningCommittee = dateOfApplicationForwardedToPlanningCommittee;
+      recordFields.stage6.dateOfApplicationForwardedToPlanningCommittee = dateOfApplicationForwardedToPlanningCommittee;
     if (planningCommitteeDecision)
-      recordFields.planningCommitteeDecision = planningCommitteeDecision;
-    if (stage6Comments) recordFields.stage6Comments = stage6Comments;
+      recordFields.stage6.planningCommitteeDecision = planningCommitteeDecision;
+    if (stage6Comments) recordFields.stage6.stage6Comments = stage6Comments;
     if (dateOfPlanningCommitteeDecision)
-      recordFields.dateOfPlanningCommitteeDecision = dateOfPlanningCommitteeDecision;
+      recordFields.stage6.dateOfPlanningCommitteeDecision = dateOfPlanningCommitteeDecision;
     if (statusOfTheApplication)
-      recordFields.statusOfTheApplication = statusOfTheApplication;
+      recordFields.stage7.statusOfTheApplication = statusOfTheApplication;
     if (dateOfDecisionGivenToApplicant)
-      recordFields.dateOfDecisionGivenToApplicant = dateOfDecisionGivenToApplicant;
-    if (stage7Comments) recordFields.stage7Comments = stage7Comments;
+      recordFields.stage7.dateOfDecisionGivenToApplicant = dateOfDecisionGivenToApplicant;
+    if (stage7Comments) recordFields.stage7.stage7Comments = stage7Comments;
 
     try {
-      //We're getting req.user.id from token
+      // check if the record with same ref. number exist.
       let record = await Record.findOne({
-        referenceNumber: req.body.referenceNumber,
+        "stage1.referenceNumber": req.body.referenceNumber,
       });
 
       //if record exists
       if (record) {
         //Update
         record = await Record.findOneAndUpdate(
-          { referenceNumber: req.body.referenceNumber },
+          { "stage1.referenceNumber": req.body.referenceNumber },
           { $set: recordFields },
           { new: true }
         );
@@ -150,10 +157,10 @@ router.get('/:id', auth, async (req, res) => {
   try {
     console.log(req.params.id);
     // find the record by its reference number
-    const record = await Record.findOne({ referenceNumber: req.params.id });
+    const record = await Record.findOne({ "stage1.referenceNumber": req.params.id });
 
     // if that particular record is not found
-    if (!record) return res.status(400).json({ msg: 'Record not found' });
+    if (!record) return res.status(400).json({ msg: 'Record not found!' });
 
     //if found
     return res.json(record);
@@ -174,7 +181,7 @@ router.delete('/:id', auth, async (req, res) => {
   try {
     // find the recordby its reference number
     const record = await Record.findOne({
-      referenceNumber: req.params.id,
+      "stage1.referenceNumber": req.params.id,
     });
 
     // if that particular record is not found
@@ -182,7 +189,7 @@ router.delete('/:id', auth, async (req, res) => {
 
     //if found
     // Remove record
-    await Record.findOneAndRemove({ referenceNumber: req.params.id });
+    await Record.findOneAndRemove({ "stage1.referenceNumber": req.params.id });
 
     res.json({ msg: 'Record deleted' });
   } catch (err) {
@@ -208,21 +215,21 @@ router.get('/search/:searchBy/:id', auth, async (req, res) => {
 
     if (searchBy == 'filterBy') {
       record = await Record.find({
-        referenceNumber: { $regex: id, $options: 'i' },
+        "stage1.referenceNumber": { $regex: id, $options: 'i' },
       });
       if (!Array.isArray(record) || !record.length) {
-        record = await Record.find({ purpose: { $regex: id, $options: 'i' } });
+        record = await Record.find({ "stage1.purpose": { $regex: id, $options: 'i' } });
       }
     }
 
     if (searchBy == 'referenceNumber') {
       record = await Record.find({
-        referenceNumber: { $regex: id, $options: 'i' },
+        "stage1.referenceNumber": { $regex: id, $options: 'i' },
       });
     }
 
     if (searchBy == 'purpose') {
-      record = await Record.find({ purpose: { $regex: id, $options: 'i' } });
+      record = await Record.find({ "stage1.purpose": { $regex: id, $options: 'i' } });
     }
     // if that particular record is not found
     if (!Array.isArray(record) || !record.length) {

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 
 /**
- * Middleware function is just a function that has access to the request and response objects. next is a callback that we have to run once we're done so that it moves on to the next piece of middleware.
+ * Validate and decode the token
  */
 module.exports = function (req, res, next) {
   // Get token from the header
@@ -13,12 +13,11 @@ module.exports = function (req, res, next) {
     //401 = Not Authorized
     return res.status(401).json({ msg: 'No token, authorization denied' });
   }
-
   // Verify the token
   try {
     //Decode the token
     const decoded = jwt.verify(token, config.get('jwtSecret'));
-
+    // get value from the token
     req.user = decoded.user;
     next();
   } catch (err) {

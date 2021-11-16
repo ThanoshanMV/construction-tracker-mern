@@ -34,7 +34,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route         POST api/admin/auth
-// @description   Authenticate admin & get token
+// @description   Authenticate admin & get token (login scenario)
 // @access        Public
 
 router.post(
@@ -91,6 +91,7 @@ router.post(
       const payload = {
         user: {
           id: user.id,
+          isAdminJWT: true
         },
       };
 

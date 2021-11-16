@@ -8,107 +8,72 @@ const RecordSchema = new mongoose.Schema({
   /**
    * Stage 1
    */
-  referenceNumber: {
-    type: String,
-    required: true,
-  },
-  dateOfApplicationRequested: {
-    type: Date,
-  },
-  purpose: {
-    type: String,
-  },
-  stage1Comments: {
-    type: String,
-  },
-  applicantAddress: {
-    type: String,
-  },
-  constructionAddress: {
-    type: String,
-  },
-  contactNo: {
-    type: Number,
-  },
-  payment: {
-    type: Number,
+  stage1: {
+    referenceNumber: {
+      type: String,
+      required: true,
+    },
+    dateOfApplicationRequested: Date,
+    purpose: String,
+    stage1Comments: String,
+    applicantAddress: String,
+    constructionAddress: String,
+    contactNo: Number,
+    payment: Number
   },
 
   /**
    * Stage 2
    */
-
-  dateOfApplicationSubmitted: {
-    type: Date,
-  },
-  relatedDocumentsSubmitted: {
-    type: String,
-  },
-  nbroRecommentationReport: {
-    type: String,
-  },
-  stage2Comments: {
-    type: String,
+  stage2: {
+    dateOfApplicationSubmitted: Date,
+    relatedDocumentsSubmitted: String,
+    nbroRecommentationReport: String,
+    stage2Comments: String
   },
 
   /**
    * Stage 3
    */
-  technicalRecommendation: {
-    type: String,
-  },
-  stage3Comments: {
-    type: String,
+  stage3: {
+    technicalRecommendation: String,
+    stage3Comments: String,
   },
 
   /**
    * Stage 4
    */
-  phiRecommendation: {
-    type: String,
-  },
-  stage4Comments: {
-    type: String,
+  stage4: {
+    phiRecommendation: String,
+    stage4Comments: String
   },
 
   /**
    * Stage 5
    */
-  rdaRecommendation: {
-    type: String,
-  },
-  stage5Comments: {
-    type: String,
+  stage5: {
+    rdaRecommendation: String,
+    stage5Comments: String,
   },
 
   /**
    * Stage 6
    */
-  dateOfApplicationForwardedToPlanningCommittee: {
-    type: Date,
-  },
-  planningCommitteeDecision: {
-    type: String,
-  },
-  stage6Comments: {
-    type: String,
-  },
-  dateOfPlanningCommitteeDecision: {
-    type: Date,
+  stage6: {
+    dateOfApplicationForwardedToPlanningCommittee: Date,
+    planningCommitteeDecision: String,
+    stage6Comments: String,
+    dateOfPlanningCommitteeDecision: Date,
   },
 
   /**
    * Stage 7
    */
-  statusOfTheApplication: {
-    type: String,
-  },
-  dateOfDecisionGivenToApplicant: {
-    type: Date,
-  },
-  stage7Comments: {
-    type: String,
-  },
+  stage7: {
+    statusOfTheApplication: String,
+    dateOfDecisionGivenToApplicant: Date,
+    stage7Comments: String,
+  }
 });
 
 const Record = mongoose.model('record', RecordSchema);

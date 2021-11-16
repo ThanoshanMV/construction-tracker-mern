@@ -104,11 +104,11 @@ router.post(
       //save user instance to database
       await user.save();
 
-      //Retun jsonwebtoken
-
+      // question: do we need to create token once the admin register a new user?
       const payload = {
         user: {
           id: user.id,
+          isAdminJWT: false
         },
       };
 

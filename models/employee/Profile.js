@@ -7,33 +7,19 @@ const ProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'employee',
   },
-  location: {
-    type: String,
-  },
+  location: String,
   //Career Status/ Professional Status
   status: {
     type: String,
     required: true,
   },
-  bio: {
-    type: String,
-  },
+  bio: String,
   social: {
-    youtube: {
-      type: String,
-    },
-    twitter: {
-      type: String,
-    },
-    facebook: {
-      type: String,
-    },
-    linkedin: {
-      type: String,
-    },
-    instagram: {
-      type: String,
-    },
+    youtube: String,
+    twitter: String,
+    facebook: String,
+    linkedin: String,
+    instagram: String,
   },
   date: {
     type: Date,

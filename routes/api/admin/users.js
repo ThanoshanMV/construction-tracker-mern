@@ -83,14 +83,15 @@ router.post(
       //save user instance to database
       await user.save();
 
-      //Retun jsonwebtoken
-
+      // create payload for jsonwebtoken
       const payload = {
         user: {
           id: user.id,
+          isAdminJWT: true
         },
       };
 
+      // create the token with the payload
       jwt.sign(
         payload,
         config.get('jwtSecret'),

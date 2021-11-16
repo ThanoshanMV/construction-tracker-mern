@@ -18,15 +18,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  resetToken: {
-    type: String,
+  token: {
+    resetToken: String,
+    expireToken: Date
   },
-  expireToken: {
-    type: Date,
-  },
-  avatar: {
-    type: String,
-  },
+  avatar: String,
   date: {
     type: Date,
     default: Date.now,
