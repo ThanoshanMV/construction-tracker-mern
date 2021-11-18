@@ -89,7 +89,7 @@ const UserCreateRecord = ({ createUserRecord, history }) => {
           </label>
           <input
             type='text'
-            placeholder='HD2020C0001'
+            placeholder='HDUC2020C0001'
             name='referenceNumber'
             value={referenceNumber}
             onChange={(e) => onChange(e)}

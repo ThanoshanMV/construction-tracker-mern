@@ -119,14 +119,11 @@ export const updateUserRecord = (formData, edit = false) => async (
         'Content-Type': 'application/json',
       },
     };
-
     const res = await axios.post('/api/records', formData, config);
-
     dispatch({
       type: GET_RECORD,
       payload: res.data,
     });
-
     dispatch(setAlert('Record Updated', 'success'));
   } catch (err) {
     const errors = err.response.data.errors;
@@ -144,8 +141,9 @@ export const updateUserRecord = (formData, edit = false) => async (
 // Get current record
 export const getCurrentRecord = (id, history) => async (dispatch) => {
   try {
+    console.log("In API ROUTE. Id: " + id);
     const res = await axios.get(`/api/records/${id}`);
-
+    console.log("In API ROUTE. Id: " + id);
     dispatch({
       type: GET_RECORD,
       payload: res.data,
@@ -164,7 +162,6 @@ export const getCurrentRecord = (id, history) => async (dispatch) => {
 export const getCurrentRecordUser = (id, history) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/records/${id}`);
-
     dispatch({
       type: GET_RECORD,
       payload: res.data,

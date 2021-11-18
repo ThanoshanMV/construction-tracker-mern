@@ -5,7 +5,7 @@ const Record = ({ record: record }) => {
   // we get record from props
   // record.referenceNumber, record.purpose
 
-  if (!record.referenceNumber) {
+  if (!record.stage1.referenceNumber) {
     return <Fragment></Fragment>;
   } else {
     return (
@@ -20,9 +20,9 @@ const Record = ({ record: record }) => {
             </tr>
           </thead>
           <tbody>
-            <tr key={record.referenceNumber}>
-              <td>{record.referenceNumber}</td>
-              <td className='hide-sm'>{record.purpose}</td>
+            <tr key={record.stage1.referenceNumber}>
+              <td>{record.stage1.referenceNumber}</td>
+              <td className='hide-sm'>{record.stage1.purpose}</td>
               <td>
                 <button className='btn btn-danger'>Delete</button>
               </td>

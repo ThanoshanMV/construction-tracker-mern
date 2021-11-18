@@ -7,12 +7,12 @@ import { withRouter } from 'react-router-dom';
 const AdminRecordDisplay = ({ record, getCurrentRecord, history }) => {
   const records = record.map((rcd) => (
     <tr key={rcd._id}>
-      <td>{rcd.referenceNumber}</td>
-      <td>{rcd.purpose}</td>
+      <td>{rcd.stage1.referenceNumber}</td>
+      <td>{rcd.stage1.purpose}</td>
       <td>
         <button
           className='btn btn-primary'
-          onClick={() => getCurrentRecord(rcd.referenceNumber, history)}
+          onClick={() => getCurrentRecord(rcd.stage1.referenceNumber, history)}
         >
           View
         </button>

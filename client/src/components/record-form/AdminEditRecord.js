@@ -49,81 +49,81 @@ const AdminEditRecord = ({
 
   // we'll use useEffect to get current profile and fetch them
   useEffect(() => {
-    getCurrentRecord(record.referenceNumber, history);
+    getCurrentRecord(record.stage1.referenceNumber, history);
 
     // we are checking and fetching the data inside the form
     setFormData({
       referenceNumber:
-        loading || !record.referenceNumber ? '' : record.referenceNumber,
+        loading || !record.stage1.referenceNumber ? '' : record.stage1.referenceNumber,
       dateOfApplicationRequested:
-        loading || !record.dateOfApplicationRequested
+        loading || !record.stage1.dateOfApplicationRequested
           ? ''
-          : moment(record.dateOfApplicationRequested).format('YYYY-MM-DD'),
-      purpose: loading || !record.purpose ? '' : record.purpose,
+          : moment(record.stage1.dateOfApplicationRequested).format('YYYY-MM-DD'),
+      purpose: loading || !record.stage1.purpose ? '' : record.stage1.purpose,
       stage1Comments:
-        loading || !record.stage1Comments ? '' : record.stage1Comments,
+        loading || !record.stage1.stage1Comments ? '' : record.stage1.stage1Comments,
       applicantAddress:
-        loading || !record.applicantAddress ? '' : record.applicantAddress,
+        loading || !record.stage1.applicantAddress ? '' : record.stage1.applicantAddress,
       constructionAddress:
-        loading || !record.constructionAddress
+        loading || !record.stage1.constructionAddress
           ? ''
-          : record.constructionAddress,
-      contactNo: loading || !record.contactNo ? '' : record.contactNo,
-      payment: loading || !record.payment ? '' : record.payment,
+          : record.stage1.constructionAddress,
+      contactNo: loading || !record.stage1.contactNo ? '' : record.stage1.contactNo,
+      payment: loading || !record.stage1.payment ? '' : record.stage1.payment,
       dateOfApplicationSubmitted:
-        loading || !record.dateOfApplicationSubmitted
+        loading || !record.stage2.dateOfApplicationSubmitted
           ? ''
-          : moment(record.dateOfApplicationSubmitted).format('YYYY-MM-DD'),
+          : moment(record.stage2.dateOfApplicationSubmitted).format('YYYY-MM-DD'),
       relatedDocumentsSubmitted:
-        loading || !record.relatedDocumentsSubmitted
+        loading || !record.stage2.relatedDocumentsSubmitted
           ? ''
-          : record.relatedDocumentsSubmitted,
+          : record.stage2.relatedDocumentsSubmitted,
       nbroRecommentationReport:
-        loading || !record.nbroRecommentationReport
+        loading || !record.stage2.nbroRecommentationReport
           ? ''
-          : record.nbroRecommentationReport,
+          : record.stage2.nbroRecommentationReport,
       stage2Comments:
-        loading || !record.stage2Comments ? '' : record.stage2Comments,
+        loading || !record.stage2.stage2Comments ? '' : record.stage2.stage2Comments,
       technicalRecommendation:
-        loading || !record.technicalRecommendation
+        loading || !record.stage3.technicalRecommendation
           ? ''
-          : record.technicalRecommendation,
+          : record.stage3.technicalRecommendation,
       stage3Comments:
-        loading || !record.stage3Comments ? '' : record.stage3Comments,
+        loading || !record.stage3.stage3Comments ? '' : record.stage3.stage3Comments,
       phiRecommendation:
-        loading || !record.phiRecommendation ? '' : record.phiRecommendation,
+        loading || !record.stage4.phiRecommendation ? '' : record.phiRecommendation,
       stage4Comments:
-        loading || !record.stage4Comments ? '' : record.stage4Comments,
+        loading || !record.stage4.stage4Comments ? '' : record.stage4.stage4Comments,
       rdaRecommendation:
-        loading || !record.rdaRecommendation ? '' : record.rdaRecommendation,
+        loading || !record.stage5.rdaRecommendation ? '' : record.stage5.rdaRecommendation,
       stage5Comments:
-        loading || !record.stage5Comments ? '' : record.stage5Comments,
+        loading || !record.stage5.stage5Comments ? '' : record.stage5.stage5Comments,
       dateOfApplicationForwardedToPlanningCommittee:
-        loading || !record.dateOfApplicationForwardedToPlanningCommittee
+        loading || !record.stage6.dateOfApplicationForwardedToPlanningCommittee
           ? ''
-          : moment(record.dateOfApplicationForwardedToPlanningCommittee).format(
+          : moment(record.stage6.dateOfApplicationForwardedToPlanningCommittee).format(
               'YYYY-MM-DD'
             ),
       planningCommitteeDecision:
-        loading || !record.planningCommitteeDecision
+        loading || !record.stage6.planningCommitteeDecision
           ? ''
-          : record.planningCommitteeDecision,
+          : record.stage6.planningCommitteeDecision,
       stage6Comments:
-        loading || !record.stage6Comments ? '' : record.stage6Comments,
+        loading || !record.stage6.stage6Comments ? '' : record.stage6.stage6Comments,
       dateOfPlanningCommitteeDecision:
-        loading || !record.dateOfPlanningCommitteeDecision
+        loading || !record.stage7.dateOfPlanningCommitteeDecision
           ? ''
-          : moment(record.dateOfPlanningCommitteeDecision).format('YYYY-MM-DD'),
+          : moment(record.stage7.dateOfPlanningCommitteeDecision).format('YYYY-MM-DD'),
       statusOfTheApplication:
-        loading || !record.statusOfTheApplication
+        loading || !record.stage7.statusOfTheApplication
           ? ''
-          : record.statusOfTheApplication,
+          : record.stage7.statusOfTheApplication,
       dateOfDecisionGivenToApplicant:
-        loading || !record.dateOfDecisionGivenToApplicant
+        loading || !record.stage7.dateOfDecisionGivenToApplicant
           ? ''
-          : moment(record.dateOfDecisionGivenToApplicant).format('YYYY-MM-DD'),
+          : moment(record.stage7.dateOfDecisionGivenToApplicant).format('YYYY-MM-DD'),
       stage7Comments:
-        loading || !record.stage7Comments ? '' : record.stage7Comments,
+        loading || !record.stage7.stage7Comments ? '' : record.stage7.stage7Comments,
     });
   }, [loading, getCurrentRecord]);
 
@@ -191,7 +191,7 @@ const AdminEditRecord = ({
             required={true}
             readOnly={true}
             type='text'
-            placeholder='HD2020C0001'
+            placeholder='HDUC2020C0001'
             name='referenceNumber'
             value={referenceNumber}
             onChange={(e) => onChange(e)}

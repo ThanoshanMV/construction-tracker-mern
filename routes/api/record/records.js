@@ -155,13 +155,10 @@ router.post(
 
 router.get('/:id', auth, async (req, res) => {
   try {
-    console.log(req.params.id);
     // find the record by its reference number
     const record = await Record.findOne({ "stage1.referenceNumber": req.params.id });
-
     // if that particular record is not found
     if (!record) return res.status(400).json({ msg: 'Record not found!' });
-
     //if found
     return res.json(record);
   } catch (err) {
@@ -237,10 +234,10 @@ router.get('/search/:searchBy/:id', auth, async (req, res) => {
     }
 
     //if found
-    console.log(req.params.id);
-    console.log(id);
-    console.log(searchBy);
-    console.log(record);
+    // console.log(req.params.id);
+    // console.log(id);
+    // console.log(searchBy);
+    // console.log(record);
     return res.json(record);
   } catch (err) {
     console.error(err.message);
