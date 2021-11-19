@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loginAdmin } from '../../actions/auth';
+import { useForm } from "react-hook-form";
 
 /**
  * Since it's a form we need to have component state
@@ -17,20 +18,10 @@ const AdminLogin = ({ loginAdmin, isAuthenticated }) => {
    * formData = state (an object with all field values)
    * setFormData = a function to update the state.
    */
-  const [formData, setFormData] = useState({
-    //Defining initial values to state
-    email: '',
-    password: '',
-  });
+   const { register, formState: { errors }, handleSubmit } = useForm();
 
-  const { email, password } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    loginAdmin(email, password);
+  const onSubmit = data => {
+    loginAdmin(data.email, data.password);
   };
 
   // Redirect if logged in
@@ -44,19 +35,16 @@ const AdminLogin = ({ loginAdmin, isAuthenticated }) => {
       <p className='lead'>
         <i className='fas fa-user'></i> Sign into your account
       </p>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
+      <form className='form' onSubmit={handleSubmit(onSubmit)}>
         <div className='form-group'>
           <label className='lead' htmlFor='email'>
             Email:
           </label>
           <input
             type='email'
-            placeholder='Email Address'
-            name='email'
-            required
-            value={email}
-            onChange={(e) => onChange(e)}
+            {...register("email", {required: true, pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })}
           />
+          {errors.email && <p style = {{color: 'red'}}>Please check the email</p>}
         </div>
         <div className='form-group'>
           <label className='lead' htmlFor='password'>
@@ -64,12 +52,9 @@ const AdminLogin = ({ loginAdmin, isAuthenticated }) => {
           </label>
           <input
             type='password'
-            placeholder='Password'
-            name='password'
-            minLength='6'
-            value={password}
-            onChange={(e) => onChange(e)}
+            {...register("password", {required: true})}
           />
+          {errors.password && <p style = {{color: 'red'}}>Please check the password</p>}
         </div>
         <input type='submit' className='btn btn-primary' value='Login' />
         <Link className='btn btn-danger my-1' to='/reset-password'>
