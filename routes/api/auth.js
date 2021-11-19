@@ -52,9 +52,9 @@ router.post(
       let admin = await Admin.findOne({ email });
 
       if (admin) {
-        admin.resetToken = token;
+        admin.token.resetToken = token;
         // token expires after an hour
-        admin.expireToken = Date.now() + 3600000;
+        admin.token.expireToken = Date.now() + 3600000;
         await admin.save();
 
         /*Sending mail using nodemailer */
@@ -101,9 +101,9 @@ router.post(
 
       let user = await User.findOne({ email });
       if (user) {
-        user.resetToken = token;
+        user.token.resetToken = token;
         // token expires after an hour
-        user.expireToken = Date.now() + 3600000;
+        user.token.expireToken = Date.now() + 3600000;
         await user.save();
 
         /*Sending mail using nodemailer */
@@ -172,32 +172,32 @@ router.post(
     const sentToken = token;
 
     let admin = await Admin.findOne({
-      resetToken: sentToken,
-      expireToken: { $gt: Date.now() },
+      "token.resetToken": sentToken,
+      "token.expireToken": { $gt: Date.now() },
     });
 
     if (admin) {
       //Encrypt password
       const salt = await bcrypt.genSalt(10); //10 is enough as per documentation
       admin.password = await bcrypt.hash(newPassword, salt);
-      admin.resetToken = undefined;
-      admin.expireToken = undefined;
+      admin.token.resetToken = undefined;
+      admin.token.expireToken = undefined;
       //save admin instance to database
       await admin.save();
       return res.json({ message: 'Password has been successfully updated!' });
     }
 
     let user = await User.findOne({
-      resetToken: sentToken,
-      expireToken: { $gt: Date.now() },
+      "token.resetToken": sentToken,
+      "token.expireToken": { $gt: Date.now() },
     });
 
     if (user) {
       //Encrypt password
       const salt = await bcrypt.genSalt(10); //10 is enough as per documentation
       user.password = await bcrypt.hash(newPassword, salt);
-      user.resetToken = undefined;
-      user.expireToken = undefined;
+      user.token.resetToken = undefined;
+      user.token.expireToken = undefined;
       //save user instance to database
       await user.save();
       return res.json({ message: 'Password has been successfully updated!' });
