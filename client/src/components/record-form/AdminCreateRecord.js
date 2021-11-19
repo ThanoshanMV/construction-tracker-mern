@@ -4,77 +4,17 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createAdminRecord, updateAdminRecord } from '../../actions/record';
+import { useForm } from "react-hook-form";
 
 const AdminCreateRecord = ({
   createAdminRecord,
   updateAdminRecord,
   history,
 }) => {
-  const [formData, setFormData] = useState({
-    status: '',
-    referenceNumber: '',
-    dateOfApplicationRequested: '',
-    purpose: '',
-    stage1Comments: '',
-    applicantAddress: '',
-    constructionAddress: '',
-    contactNo: '',
-    payment: '',
-    dateOfApplicationSubmitted: '',
-    relatedDocumentsSubmitted: '',
-    nbroRecommentationReport: '',
-    stage2Comments: '',
-    technicalRecommendation: '',
-    stage3Comments: '',
-    phiRecommendation: '',
-    stage4Comments: '',
-    rdaRecommendation: '',
-    stage5Comments: '',
-    dateOfApplicationForwardedToPlanningCommittee: '',
-    planningCommitteeDecision: '',
-    stage6Comments: '',
-    dateOfPlanningCommitteeDecision: '',
-    statusOfTheApplication: '',
-    dateOfDecisionGivenToApplicant: '',
-    stage7Comments: '',
-  });
-
-  const {
-    referenceNumber,
-    dateOfApplicationRequested,
-    purpose,
-    stage1Comments,
-    applicantAddress,
-    constructionAddress,
-    contactNo,
-    payment,
-    dateOfApplicationSubmitted,
-    relatedDocumentsSubmitted,
-    nbroRecommentationReport,
-    stage2Comments,
-    technicalRecommendation,
-    stage3Comments,
-    phiRecommendation,
-    stage4Comments,
-    rdaRecommendation,
-    stage5Comments,
-    dateOfApplicationForwardedToPlanningCommittee,
-    planningCommitteeDecision,
-    stage6Comments,
-    dateOfPlanningCommitteeDecision,
-    statusOfTheApplication,
-    dateOfDecisionGivenToApplicant,
-    stage7Comments,
-  } = formData;
-
-  const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // Creating onSubmit
-  const onSubmit = (e) => {
-    e.preventDefault();
-    createAdminRecord(formData, history);
+  const { register, formState: { errors }, handleSubmit } = useForm();
+  const onSubmit = data => {
+    // console.log(data);
+    createAdminRecord(data, history);
   };
   return (
     <Fragment>
@@ -87,7 +27,7 @@ const AdminCreateRecord = ({
       {/*stage 1 starts*/}
 
       <h3 className='lead text-secondary'>Stage 1: Request for Application</h3>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
+      <form className='form' onSubmit={handleSubmit(onSubmit)}>
         <div className='form-group'>
           <label className='lead' htmlFor='referenceNumber'>
             Reference Number
@@ -95,10 +35,9 @@ const AdminCreateRecord = ({
           <input
             type='text'
             placeholder='HDUC2020C0001'
-            name='referenceNumber'
-            value={referenceNumber}
-            onChange={(e) => onChange(e)}
+          {...register("referenceNumber", {required: true}, { pattern: /^(HDUC2020C)$/ })}
           />
+          {errors.referenceNumber && <p style = {{color: 'red'}}>must begin with HDUC2020C</p>}
         </div>
         <div className='form-group'>
           <label className='lead' htmlFor='dateOfApplicationRequested'>
@@ -106,16 +45,14 @@ const AdminCreateRecord = ({
           </label>
           <input
             type='date'
-            name='dateOfApplicationRequested'
-            value={dateOfApplicationRequested}
-            onChange={(e) => onChange(e)}
+            {...register("dateOfApplicationRequested")}
           />
         </div>
         <div className='form-group'>
           <label className='lead' htmlFor='purpose'>
             Purpose of the Application
           </label>
-          <select name='purpose' value={purpose} onChange={(e) => onChange(e)}>
+          <select {...register("purpose")}>
             <option value='0'>Application Purpose</option>
             <option value='Residence'>Residence</option>
             <option value='Commercial'>Commercial</option>
@@ -127,9 +64,7 @@ const AdminCreateRecord = ({
             Comments
           </label>
           <textarea
-            name='stage1Comments'
-            value={stage1Comments}
-            onChange={(e) => onChange(e)}
+            {...register("stage1Comments")}
             cols='30'
             rows='5'
             placeholder='Comments'
@@ -140,9 +75,7 @@ const AdminCreateRecord = ({
             Address of Applicant
           </label>
           <textarea
-            name='applicantAddress'
-            value={applicantAddress}
-            onChange={(e) => onChange(e)}
+            {...register("applicantAddress")}
             cols='30'
             rows='5'
             placeholder='Address'
@@ -153,9 +86,7 @@ const AdminCreateRecord = ({
             Address of the Contruction Site
           </label>
           <textarea
-            name='constructionAddress'
-            value={constructionAddress}
-            onChange={(e) => onChange(e)}
+            {...register("constructionAddress")}
             cols='30'
             rows='5'
             placeholder='Construction Site'
@@ -168,10 +99,9 @@ const AdminCreateRecord = ({
           <input
             type='number'
             placeholder='07xxxxxxxx'
-            name='contactNo'
-            value={contactNo}
-            onChange={(e) => onChange(e)}
+            {...register("contactNo", {required: true, minLength: 9, maxLength: 10})}
           />
+          {errors.contactNo && <p style = {{color: 'red'}}>Please check the contact number</p>}
         </div>
         <div className='form-group'>
           <label className='lead' htmlFor='payment'>
@@ -180,11 +110,10 @@ const AdminCreateRecord = ({
           <input
             type='number'
             placeholder='Amount'
-            name='payment'
-            value={payment}
-            onChange={(e) => onChange(e)}
+            {...register("payment", {required: true})}
           />
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          {errors.payment && <p style = {{color: 'red'}}>Please check the payment</p>}
+          {/* <input type='submit' value='Save' className='btn btn-primary my-1' /> */}
         </div>
 
         {/*stage 1 ends*/}
@@ -200,9 +129,7 @@ const AdminCreateRecord = ({
           </label>
           <input
             type='date'
-            name='dateOfApplicationSubmitted'
-            value={dateOfApplicationSubmitted}
-            onChange={(e) => onChange(e)}
+            {...register("dateOfApplicationSubmitted")}
           />
         </div>
         <div className='form-group'>
@@ -210,9 +137,7 @@ const AdminCreateRecord = ({
             Related Documents Submitted
           </label>
           <select
-            name='relatedDocumentsSubmitted'
-            value={relatedDocumentsSubmitted}
-            onChange={(e) => onChange(e)}
+            {...register("relatedDocumentsSubmitted")}
           >
             <option value='0'>* Related Documents Submitted</option>
             <option value='Yes'>Yes</option>
@@ -224,9 +149,7 @@ const AdminCreateRecord = ({
             NBRO Recommentation Report
           </label>
           <select
-            name='nbroRecommentationReport'
-            value={nbroRecommentationReport}
-            onChange={(e) => onChange(e)}
+            {...register("nbroRecommentationReport")}
           >
             <option value='0'>* NBRO Recommentation Report</option>
             <option value='Recommended'>Recommended</option>
@@ -238,14 +161,12 @@ const AdminCreateRecord = ({
             Comments
           </label>
           <textarea
-            name='stage2Comments'
-            value={stage2Comments}
-            onChange={(e) => onChange(e)}
+            {...register("stage2Comments")}
             cols='30'
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          {/* <input type='submit' value='Save' className='btn btn-primary my-1' /> */}
         </div>
 
         {/*stage 2  ends*/}
@@ -259,9 +180,7 @@ const AdminCreateRecord = ({
             Technical Recommendation by the Technical Officier
           </label>
           <select
-            name='technicalRecommendation'
-            value={technicalRecommendation}
-            onChange={(e) => onChange(e)}
+            {...register("technicalRecommendation")}
           >
             <option value='0'>* Technical Recommendation</option>
             <option value='Recommended'>Recommended</option>
@@ -273,14 +192,12 @@ const AdminCreateRecord = ({
             Comments
           </label>
           <textarea
-            name='stage3Comments'
-            value={stage3Comments}
-            onChange={(e) => onChange(e)}
+            {...register("stage3Comments")}
             cols='30'
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          {/* <input type='submit' value='Save' className='btn btn-primary my-1' /> */}
         </div>
 
         {/*stage 3 ends*/}
@@ -294,9 +211,7 @@ const AdminCreateRecord = ({
             Health Recommendation by the Public Health Inspector
           </label>
           <select
-            name='phiRecommendation'
-            value={phiRecommendation}
-            onChange={(e) => onChange(e)}
+            {...register("phiRecommendation")}
           >
             <option value='0'>* Health Recommendation</option>
             <option value='Recommended'>Recommended</option>
@@ -308,14 +223,12 @@ const AdminCreateRecord = ({
             Comments
           </label>
           <textarea
-            name='stage4Comments'
-            value={stage4Comments}
-            onChange={(e) => onChange(e)}
+            {...register("stage4Comments")}
             cols='30'
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          {/* <input type='submit' value='Save' className='btn btn-primary my-1' /> */}
         </div>
 
         {/*stage 4 ends*/}
@@ -329,9 +242,7 @@ const AdminCreateRecord = ({
             RDA/ PRDA Recommendation (If needed)
           </label>
           <select
-            name='rdaRecommendation'
-            value={rdaRecommendation}
-            onChange={(e) => onChange(e)}
+            {...register("rdaRecommendation")}
           >
             <option value='0'>* RDA/ PRDA Recommendation</option>
             <option value='Nill'>Nill</option>
@@ -344,14 +255,12 @@ const AdminCreateRecord = ({
             Comments
           </label>
           <textarea
-            name='stage5Comments'
-            value={stage5Comments}
-            onChange={(e) => onChange(e)}
+            {...register("stage5Comments")}
             cols='30'
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          {/* <input type='submit' value='Save' className='btn btn-primary my-1' /> */}
         </div>
 
         {/*stage 5 ends*/}
@@ -371,9 +280,7 @@ const AdminCreateRecord = ({
           </label>
           <input
             type='date'
-            name='dateOfApplicationForwardedToPlanningCommittee'
-            value={dateOfApplicationForwardedToPlanningCommittee}
-            onChange={(e) => onChange(e)}
+            {...register("dateOfApplicationForwardedToPlanningCommittee")}
           />
         </div>
         <div className='form-group'>
@@ -381,9 +288,7 @@ const AdminCreateRecord = ({
             Planning Committee Decision
           </label>
           <select
-            name='planningCommitteeDecision'
-            value={planningCommitteeDecision}
-            onChange={(e) => onChange(e)}
+            {...register("planningCommitteeDecision")}
           >
             <option value='0'>* Planning Committee Recommendation</option>
             <option value='Approved'>Approved</option>
@@ -399,9 +304,7 @@ const AdminCreateRecord = ({
             Comments
           </label>
           <textarea
-            name='stage6Comments'
-            value={stage6Comments}
-            onChange={(e) => onChange(e)}
+            {...register("stage6Comments")}
             cols='30'
             rows='5'
             placeholder='Comments'
@@ -413,11 +316,9 @@ const AdminCreateRecord = ({
           </label>
           <input
             type='date'
-            name='dateOfPlanningCommitteeDecision'
-            value={dateOfPlanningCommitteeDecision}
-            onChange={(e) => onChange(e)}
+            {...register("dateOfPlanningCommitteeDecision")}
           />
-          <input type='submit' value='Save' className='btn btn-primary my-1' />
+          {/* <input type='submit' value='Save' className='btn btn-primary my-1' /> */}
         </div>
 
         {/*stage 6 ends*/}
@@ -433,9 +334,7 @@ const AdminCreateRecord = ({
             Status
           </label>
           <select
-            name='statusOfTheApplication'
-            value={statusOfTheApplication}
-            onChange={(e) => onChange(e)}
+            {...register("statusOfTheApplication")}
           >
             <option value='0'>* Status</option>
             <option value='Approved'>Approved</option>
@@ -451,9 +350,7 @@ const AdminCreateRecord = ({
           </label>
           <input
             type='date'
-            name='dateOfDecisionGivenToApplicant'
-            value={dateOfDecisionGivenToApplicant}
-            onChange={(e) => onChange(e)}
+            {...register("dateOfDecisionGivenToApplicant")}
           />
         </div>
         <div className='form-group'>
@@ -461,9 +358,7 @@ const AdminCreateRecord = ({
             Comments
           </label>
           <textarea
-            name='stage7Comments'
-            value={stage7Comments}
-            onChange={(e) => onChange(e)}
+            {...register("stage7Comments")}
             cols='30'
             rows='5'
             placeholder='Comments'
