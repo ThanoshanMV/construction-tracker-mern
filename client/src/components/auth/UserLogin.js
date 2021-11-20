@@ -48,7 +48,8 @@ const UserLogin = ({ login, isAuthenticated }) => {
           </label>
           <input
             type='password'
-            {...register("password", {required: true})}
+            {...register("password", {required: true,
+            pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/})}
           />
           {errors.password && <p style = {{color: 'red'}}>Please check the password</p>}
         </div>

@@ -4,51 +4,28 @@ import { Link, withRouter } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { resetPassword } from '../../actions/auth';
 import PropTypes from 'prop-types';
-
-/**
- * Since it's a form we need to have component state
- * because each input needs to have its own state and also
- * they need to have on change handler, so when we type in it updates
- * the state.
- *
- */
+import { useForm } from "react-hook-form";
 
 const Reset = ({ resetPassword }) => {
-  /**
-   * formData = state (an object with all field values)
-   * setFormData = a function to update the state.
-   */
-  const [formData, setFormData] = useState({
-    //Defining initial values to state
-    email: '',
-  });
-
-  const { email } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    resetPassword(email);
+  const { register, formState: { errors }, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    resetPassword(data.email);
   };
 
   return (
     <Fragment>
       <h1 className='large text-primary'>Reset</h1>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
+      <form className='form' onSubmit={handleSubmit(onSubmit)}>
         <div className='form-group'>
           <label className='lead' htmlFor='email'>
             Email:
           </label>
           <input
             type='email'
-            placeholder='Email Address'
-            name='email'
-            value={email}
-            onChange={(e) => onChange(e)}
+            {...register("email", {required: true, pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })}
           />
         </div>
+        {errors.email && <p style = {{color: 'red'}}>Please check the email</p>}
         <input type='submit' className='btn btn-primary' value='Reset' />
         <Link className='btn btn-light my-1' to='/'>
           Go Back

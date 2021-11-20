@@ -3,57 +3,48 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateAdminPassword } from '../../actions/profile';
+import { useForm } from "react-hook-form";
 
 const AdminChangePassword = ({ updateAdminPassword }) => {
-  const [formData, setFormData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmNewPassword: '',
-  });
-
-  const { currentPassword, newPassword, confirmNewPassword } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  // Creating onSubmit
-  const onSubmit = (e) => {
-    e.preventDefault();
-    // adding true as this is an edit form
-    updateAdminPassword(formData);
+  const { register, formState: { errors }, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    updateAdminPassword(data);
   };
   return (
     <Fragment>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
+      <form className='form' onSubmit={handleSubmit(onSubmit)}>
         <p className='lead'>
           <i className='fas fa-user'></i> Change Password
         </p>
         <div className='form-group'>
           <input
             type='password'
-            name='currentPassword'
-            value={currentPassword}
-            onChange={(e) => onChange(e)}
+            {...register("currentPassword", {required: true,
+              pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+            })}
           />
           <small className='form-text'>Current Password</small>
+          {errors.currentPassword && <p style = {{color: 'red'}}>Please check the current password</p>}
         </div>
         <div className='form-group'>
           <input
             type='password'
-            name='newPassword'
-            value={newPassword}
-            onChange={(e) => onChange(e)}
+            {...register("newPassword", {required: true,
+              pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+            })}
           />
           <small className='form-text'>New Password</small>
+          {errors.newPassword && <p style = {{color: 'red'}}>New password should contain one capital, small letters and the number of characters between 6-15</p>}
         </div>
         <div className='form-group'>
           <input
             type='password'
-            value={confirmNewPassword}
-            name='confirmNewPassword'
-            onChange={(e) => onChange(e)}
+            {...register("confirmNewPassword", {required: true,
+              pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+            })}
           />
           <small className='form-text'>Confirm New Password</small>
+          {errors.confirmNewPassword && <p style = {{color: 'red'}}>Confirm password should contain one capital, small letters and the number of characters between 6-15</p>}
         </div>
         <input
           type='submit'
