@@ -82,7 +82,7 @@ const App = () => {
         <Fragment>
           <Navbar />
           <Route exact path='/' component={Landing} />
-          <section className='container'>
+          
             {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
             <Alert />
@@ -159,7 +159,7 @@ const App = () => {
                 component={AdminProfile}
               />
             </Switch>
-          </section>
+
         </Fragment>
       </Router>
     </Provider>

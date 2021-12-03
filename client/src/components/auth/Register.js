@@ -51,6 +51,7 @@ const Register = ({ setAlert, register, isAdmin, loading, history }) => {
   return loading && isAdmin === null ? (
     <Spinner />
   ) : (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>Register User</h1>
       <p className='lead'>
@@ -113,6 +114,7 @@ const Register = ({ setAlert, register, isAdmin, loading, history }) => {
         </Link>
       </form>
     </Fragment>
+    </section>
   );
 };
 

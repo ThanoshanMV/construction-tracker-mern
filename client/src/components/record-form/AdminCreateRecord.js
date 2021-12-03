@@ -17,6 +17,7 @@ const AdminCreateRecord = ({
     createAdminRecord(data, history);
   };
   return (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>
         Construction Approval Records <i className='fas fa-rocket'></i>
@@ -373,6 +374,7 @@ const AdminCreateRecord = ({
         <input type='submit' className='btn btn-primary my-1' />
       </form>
     </Fragment>
+    </section>
   );
 };
 

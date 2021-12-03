@@ -25,6 +25,7 @@ const UpdatePassword = ({ updatePassword, history }) => {
   };
 
   return (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>Update Password</h1>
       <form className='form' onSubmit={handleSubmit(onSubmit)}>
@@ -46,6 +47,7 @@ const UpdatePassword = ({ updatePassword, history }) => {
         </Link>
       </form>
     </Fragment>
+    </section>
   );
 };
 

@@ -21,6 +21,7 @@ const UserProfile = ({
       {profile === null || loading ? (
         <Spinner />
       ) : (
+        <section className='container'>
         <Fragment>
           <Link to='/user-dashboard' className='btn btn-light'>
             Back To Dashboard
@@ -33,6 +34,7 @@ const UserProfile = ({
             <ProfileAbout profile={profile} />
           </div>
         </Fragment>
+        </section>
       )}
     </Fragment>
   );

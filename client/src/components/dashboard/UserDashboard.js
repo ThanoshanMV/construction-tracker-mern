@@ -22,6 +22,7 @@ const UserDashboard = ({
   return loading && profile === null ? (
     <Spinner />
   ) : (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
@@ -46,6 +47,7 @@ const UserDashboard = ({
         </Fragment>
       )}
     </Fragment>
+    </section>
   );
 };
 

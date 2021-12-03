@@ -12,6 +12,7 @@ const UserCreateRecord = ({ createUserRecord, history }) => {
     createUserRecord(data, history);
   };
   return (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>
         Construction Approval Records <i className='fas fa-rocket'></i>
@@ -368,6 +369,7 @@ const UserCreateRecord = ({ createUserRecord, history }) => {
         <input type='submit' className='btn btn-primary my-1' />
       </form>
     </Fragment>
+    </section>
   );
 };
 

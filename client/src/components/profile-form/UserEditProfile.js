@@ -55,6 +55,7 @@ const UserEditProfile = ({
     createUserProfile(formData, history, true);
   };
   return (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>Edit Your Profile</h1>
       <p className='lead'>
@@ -151,6 +152,7 @@ const UserEditProfile = ({
       </form>
       <UserChangePassword />
     </Fragment>
+    </section>
   );
 };
 

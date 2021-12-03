@@ -26,6 +26,7 @@ const UserLogin = ({ login, isAuthenticated }) => {
   }
 
   return (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>User Sign In</h1>
       <p className='lead'>
@@ -62,6 +63,7 @@ const UserLogin = ({ login, isAuthenticated }) => {
         </Link>
       </form>
     </Fragment>
+    </section>
   );
 };
 

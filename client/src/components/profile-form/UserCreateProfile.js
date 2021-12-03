@@ -29,6 +29,7 @@ const UserCreateProfile = ({ createUserProfile, history }) => {
   };
 
   return (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>Edit Your Profile</h1>
       <p className='lead'>
@@ -124,6 +125,7 @@ const UserCreateProfile = ({ createUserProfile, history }) => {
         </Link>
       </form>
     </Fragment>
+    </section>
   );
 };
 

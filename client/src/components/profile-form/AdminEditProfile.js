@@ -55,6 +55,7 @@ const AdminEditProfile = ({
     createAdminProfile(formData, history, true);
   };
   return (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>Edit Your Profile</h1>
       <p className='lead'>
@@ -147,6 +148,7 @@ const AdminEditProfile = ({
       </form>
       <AdminChangePassword />
     </Fragment>
+    </section>
   );
 };
 

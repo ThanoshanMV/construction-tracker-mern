@@ -26,9 +26,7 @@ export const createAdminRecord = (formData, history, edit = false) => async (
 
     dispatch(setAlert(edit ? 'Record Updated' : 'Record Created', 'success'));
     // We can't use <Redirect/> to redirect users in actions thus we use history object.
-    if (!edit) {
-      history.push('/admin-dashboard');
-    }
+    history.push('/admin-dashboard');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -94,9 +92,7 @@ export const createUserRecord = (formData, history, edit = false) => async (
 
     dispatch(setAlert(edit ? 'Record Updated' : 'Record Created', 'success'));
     // We can't use <Redirect/> to redirect users in actions thus we use history object.
-    if (!edit) {
-      history.push('/user-dashboard');
-    }
+    history.push('/user-dashboard');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {

@@ -170,6 +170,7 @@ const UserEditRecord = ({
     updateUserRecord(formData, history, true);
   };
   return (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>
         Construction Approval Records <i className='fas fa-rocket'></i>
@@ -609,6 +610,7 @@ const UserEditRecord = ({
         </button>
       </form>
     </Fragment>
+    </section>
   );
 };
 

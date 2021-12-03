@@ -13,6 +13,7 @@ const Reset = ({ resetPassword }) => {
   };
 
   return (
+    <section className='container'>
     <Fragment>
       <h1 className='large text-primary'>Reset</h1>
       <form className='form' onSubmit={handleSubmit(onSubmit)}>
@@ -32,6 +33,7 @@ const Reset = ({ resetPassword }) => {
         </Link>
       </form>
     </Fragment>
+    </section>
   );
 };
 
