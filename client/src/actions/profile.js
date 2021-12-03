@@ -169,7 +169,7 @@ export const createUserProfile = (formData, history, edit = false) => async (
 // update Admin Password
 
 // history object's push method will redirect after we've submitted the form.
-export const updateAdminPassword = (formData) => async (dispatch) => {
+export const updateAdminPassword = (formData, history) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -178,8 +178,8 @@ export const updateAdminPassword = (formData) => async (dispatch) => {
     };
 
     await axios.post('/api/admin/profile/password', formData, config);
-
     dispatch(setAlert('Password Updated', 'success'));
+    history.push('/admin-dashboard');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
