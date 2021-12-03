@@ -231,12 +231,13 @@ export const resetPassword = (email) => async (dispatch) => {
 
   try {
     await axios.post('api/reset-password', body, config);
-    dispatch(setAlert('Check your email', 'success'));
+    dispatch(setAlert('Email sent to the given address', 'success'));
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
+    dispatch(setAlert('Invalid email. Please check the entered email', 'danger'));
   }
 };
 
@@ -256,13 +257,15 @@ export const updatePassword = (password, token, history) => async (
   try {
     await axios.post('/api/new-password', body, config);
     dispatch(
-      setAlert('Password successfully updated. Please Log In!', 'success')
+      setAlert('Password successfully updated. Please Log In Again!', 'success')
     );
-    history.push('/');
+    // history.push('/');
   } catch (err) {
     const errors = err.response.data.errors;
+    console.log(err);
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
+    dispatch(setAlert('Sorry. Your token is invalid. Please try to reset again.', 'danger'));
   }
 };

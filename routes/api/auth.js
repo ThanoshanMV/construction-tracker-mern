@@ -41,7 +41,6 @@ router.post(
         console.log(err);
       }
       const token = buffer.toString('hex');
-
       /**
        * req.body is the object of data that's going be sent.
        * So we can access req.body.name , req.body.email and so on. Instead
@@ -84,11 +83,25 @@ router.post(
             subject: 'Reset Password: Construction Tracker', // Subject line
             text: 'Hello world?', // plain text body
             html: `
-    <p> You have requested for password reset</p>
-    <br>
-    <h3>Click in this 
-    <a href="http://localhost:3000/reset/${token}">to reset password</a>
-    `,
+            <h1>Hello from your friends @ Construction Tracker!</h1>
+            <br/>
+            <h2>We received a request to reset your account password.</h2>
+            <br/>
+            <p>If it was you, please click the below token link to reset your password.</p>
+            <br/>
+            <p>Please click in this token link to
+            <a href="http://localhost:3000/reset/${token}">reset password</a>
+            </p>
+            <br/>
+            <p>If this is not you, you don't have to do anything. Please make sure that you have Strong password. :)</p>
+            <br/>
+            <br/>
+            <h2>Please note that, once you reset the password with given token, it becomes invalid!</h2>
+            <br/>
+            <p>Thank you,</p>
+            <br/>
+            <p>Your friends at Construction Tracker.</p>
+            `
             // html body
           });
 
@@ -96,7 +109,7 @@ router.post(
           console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         }
         main().catch(console.error);
-        return res.json({ message: 'Check your email' });
+        return res.status(200).json({ message: 'Check your email' });
       }
 
       let user = await User.findOne({ email });
@@ -133,11 +146,25 @@ router.post(
             subject: 'Reset Password: Construction Tracker', // Subject line
             text: 'Hello world?', // plain text body
             html: `
-    <p> You have requested for password reset</p>
-    <br>
-    <h3>Click in this 
-    <a href="http://localhost:3000/reset/${token}">to reset password</a>
-    `,
+            <h1>Hello from your friends @ Construction Tracker!</h1>
+            <br/>
+            <h2>We received a request to reset your account password.</h2>
+            <br/>
+            <p>If it was you, please click the below token link to reset your password.</p>
+            <br/>
+            <p>Please click in this token link to
+            <a href="http://localhost:3000/reset/${token}">reset password</a>
+            </p>
+            <br/>
+            <p>If this is not you, you don't have to do anything. Please make sure that you have Strong password. :)</p>
+            <br/>
+            <br/>
+            <h2>Please note that, once you reset the password with given token, it becomes invalid!</h2>
+            <br/>
+            <p>Thank you,</p>
+            <br/>
+            <p>Your friends at Construction Tracker.</p>
+            `
             // html body
           });
 
@@ -145,9 +172,9 @@ router.post(
           console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         }
         mainUser().catch(console.error);
-        return res.json({ message: 'Check your email' });
+        return res.status(200).json({ message: 'Check your email' });
       }
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).send({ msg: 'Invalid email. Please check your email.' });
     });
   }
 );
