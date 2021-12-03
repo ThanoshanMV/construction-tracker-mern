@@ -91,7 +91,7 @@ const AdminEditRecord = ({
       stage3Comments:
         loading || !record.stage3.stage3Comments ? '' : record.stage3.stage3Comments,
       phiRecommendation:
-        loading || !record.stage4.phiRecommendation ? '' : record.phiRecommendation,
+        loading || !record.stage4.phiRecommendation ? '' : record.stage4.phiRecommendation,
       stage4Comments:
         loading || !record.stage4.stage4Comments ? '' : record.stage4.stage4Comments,
       rdaRecommendation:
@@ -191,7 +191,7 @@ const AdminEditRecord = ({
             required={true}
             readOnly={true}
             type='text'
-            placeholder='HDUC2020C0001'
+            placeholder='HDUC2020C001'
             name='referenceNumber'
             value={referenceNumber}
             onChange={(e) => onChange(e)}
@@ -281,12 +281,12 @@ const AdminEditRecord = ({
             value={payment}
             onChange={(e) => onChange(e)}
           />
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 1 ends*/}
@@ -347,12 +347,12 @@ const AdminEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 2  ends*/}
@@ -387,12 +387,12 @@ const AdminEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 3 ends*/}
@@ -427,12 +427,12 @@ const AdminEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 4 ends*/}
@@ -468,12 +468,12 @@ const AdminEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 5 ends*/}
@@ -539,12 +539,12 @@ const AdminEditRecord = ({
             value={dateOfPlanningCommitteeDecision}
             onChange={(e) => onChange(e)}
           />
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 6 ends*/}

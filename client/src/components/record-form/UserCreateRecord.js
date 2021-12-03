@@ -29,7 +29,7 @@ const UserCreateRecord = ({ createUserRecord, history }) => {
           </label>
           <input
             type='text'
-            placeholder='HDUC2020C0001'
+            placeholder='HDUC2020C001'
           {...register("referenceNumber", {required: true}, { pattern: /^(HDUC2020C)$/ })}
           />
           {errors.referenceNumber && <p style = {{color: 'red'}}>must begin with HDUC2020C</p>}

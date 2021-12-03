@@ -89,7 +89,7 @@ const UserEditRecord = ({
       stage3Comments:
         loading || !record.stage3.stage3Comments ? '' : record.stage3.stage3Comments,
       phiRecommendation:
-        loading || !record.stage4.phiRecommendation ? '' : record.phiRecommendation,
+        loading || !record.stage4.phiRecommendation ? '' : record.stage4.phiRecommendation,
       stage4Comments:
         loading || !record.stage4.stage4Comments ? '' : record.stage4.stage4Comments,
       rdaRecommendation:
@@ -189,7 +189,7 @@ const UserEditRecord = ({
             required={true}
             readOnly={true}
             type='text'
-            placeholder='HDUC2020C0001'
+            placeholder='HDUC2020C001'
             name='referenceNumber'
             value={referenceNumber}
             onChange={(e) => onChange(e)}
@@ -279,12 +279,12 @@ const UserEditRecord = ({
             value={payment}
             onChange={(e) => onChange(e)}
           />
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 1 ends*/}
@@ -345,12 +345,12 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 2  ends*/}
@@ -385,12 +385,12 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 3 ends*/}
@@ -425,12 +425,12 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 4 ends*/}
@@ -466,12 +466,12 @@ const UserEditRecord = ({
             rows='5'
             placeholder='Comments'
           ></textarea>
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 5 ends*/}
@@ -537,12 +537,12 @@ const UserEditRecord = ({
             value={dateOfPlanningCommitteeDecision}
             onChange={(e) => onChange(e)}
           />
-          <input
+          {/* <input
             type='button'
             value='Save'
             onClick={update}
             className='btn btn-primary my-1'
-          />
+          /> */}
         </div>
 
         {/*stage 6 ends*/}

@@ -36,7 +36,7 @@ const UserSearchBar = ({ getSearchRecords }) => {
             <option value='filterBy'>Filter By</option>
             <option value='referenceNumber'>Reference Number</option>
             <option value='purpose'>Purpose</option>
-            <option value='other'>Other</option>
+            {/* <option value='other'>Other</option> */}
           </select>
         </div>
         <input

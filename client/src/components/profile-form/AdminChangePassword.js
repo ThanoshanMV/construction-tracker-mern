@@ -51,9 +51,9 @@ const AdminChangePassword = ({ updateAdminPassword }) => {
           value='Change Password'
           className='btn btn-danger my-1'
         />
-        <Link className='btn btn-light my-1' to='/admin-dashboard'>
+        {/* <Link className='btn btn-light my-1' to='/admin-dashboard'>
           Go Back
-        </Link>
+        </Link> */}
       </form>
     </Fragment>
   );

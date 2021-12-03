@@ -14,8 +14,8 @@ import {
  *  Creating initial state for authentication
  */
 const initialState = {
-  token: localStorage.getItem('token'),
-  isAuthenticated: null,
+  token: null,
+  isAuthenticated: false,
   isAdmin: null,
   isUser: null,
   isRegistered: false,
