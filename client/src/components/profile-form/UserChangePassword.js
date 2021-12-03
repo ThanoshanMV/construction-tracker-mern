@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { updateUserPassword } from '../../actions/profile';
 import { useForm } from "react-hook-form";
 
-const UserChangePassword = ({ updateUserPassword }) => {
+const UserChangePassword = ({ updateUserPassword, history }) => {
   const { register, formState: { errors }, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    updateUserPassword(data);
+    updateUserPassword(data, history);
   };
   return (
     <Fragment>
