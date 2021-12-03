@@ -23,7 +23,7 @@ const Reset = ({ resetPassword }) => {
           </label>
           <input
             type='email'
-            {...register("email", {required: true, pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })}
+            {...register("email", {required: true, pattern: /\S+@\S+\.\S+/ })}
           />
         </div>
         {errors.email && <p style = {{color: 'red'}}>Please check the email</p>}
